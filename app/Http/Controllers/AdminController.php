@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Admin;
 use App\Models\DataCuti;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Toastr;
 
 class AdminController extends Controller
 {
@@ -35,16 +34,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Profil Karyawan.
-     */
-    public function profil(){
-        return view('admin.layouts.profil', [
-            "title" => "Profil Karyawan"
-        ]);
-    }
-
-    /**
-     * Verifikasi Cuti Karyawan.
+     * Menampilkan Verifikasi Cuti Karyawan.
      */
     public function vertifikasi(){
         return view('admin.layouts.vertifikasi', [
@@ -53,7 +43,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Riwayat Verifikasi Cuti Karyawan.
+     * Menampilkan Riwayat Verifikasi Cuti Karyawan.
      */
     public function riwayat(){
         return view('admin.layouts.riwayatvertifikasi', [
@@ -74,137 +64,9 @@ class AdminController extends Controller
             "title" => "Data Karyawan", 'admins' => $admins,
         ])->with('count', $admins);
     }
-    /**
-     * Menampilkan form tambah karyawan.
-     */
-    public function tambahkaryawan(){
-        return view('admin.layouts.tambahkaryawan', [
-            "title" => "Tambah Data Karyawan"
-        ]);
-    }
-    /**
-     * Proses menambah data karyawan.
-     */
-    public function tambahdata(Request $request){
-        $this->validate($request,[
-            'nik'           => 'required|numeric|digits_between:1,50|unique:admins,nik',
-            'name'          => 'required',
-            'tempat_lahir'  => 'required',
-            'tgl_lahir'     => 'required',
-            'agama'         => 'required',
-            'jenis_kelamin' => 'required',
-            'no_hp'         => 'required',
-            'email'         => 'required',
-            'alamat'        => 'required',
-            'jabatan'       => 'required',
-            'bagian'        => 'required',
-            'tgl_masuk'     => 'required',
-        ]);
-
-            $admins = DB::table('admins')->insert([
-                'nik'           =>$request->nik,
-                'name'          =>$request->name,
-                'tempat_lahir'  =>$request->tempat_lahir,
-                'tgl_lahir'     =>$request->tgl_lahir,
-                'agama'         =>$request->agama,
-                'jenis_kelamin' =>$request->jenis_kelamin,
-                'no_hp'         =>$request->no_hp,
-                'email'         =>$request->email,
-                'alamat'        =>$request->alamat,
-                'jabatan'       =>$request->jabatan,
-                'bagian'        =>$request->bagian,
-                'tgl_masuk'     =>$request->tgl_masuk,
-            ]);
-
-            return redirect('/admin/datakaryawan')->with('sukses', 'Berhasil menambahkan data karyawan');
-
-
-        // $request->validate([
-        //     'nik' => 'required|numeric|digits_between:1,50|unique:admins,nik',
-        //     'name' => 'required',
-        //     'tempat_lahir'  => 'required',
-        //     'tgl_lahir'     => 'required',
-        //     'email'         => 'required',
-        //     'jabatan'       => 'required',
-        //     'bagian'        => 'required',
-        //     'no_hp'         => 'required',
-        // ]);
-
-        // $admins                 = new Admin;
-        // $admins->nik            = $request->nik;
-        // $admins->name           = $request->name;
-        // $admins->tempat_lahir   = $request->tempat_lahir;
-        // $admins->tgl_lahir      = $request->tgl_lahir;
-        // $admins->email          = $request->email;
-        // $admins->jabatan        = $request->jabatan;
-        // $admins->bagian         = $request->bagian;
-        // $admins->no_hp          = $request->no_hp;
-
-        // if($admins->save()) {
-        //     return redirect('/admin/datakaryawan')->with('sukses', 'Berhasil menambahkan data karyawan');
-        // } else {
-        //     return redirect()->back()->withErrors([
-        //         'nik' => 'Mohon Maaf NIK Yang Anda Masukan Sudah Terdaftar, Silahkan Inputkan NIK Terbaru'
-        //     ])->onlyInput('nik');
-        // }
-    }
 
     /**
-     * Menampilkan Form edit karyawan.
-     */
-    public function edit($nik){
-        $admins = DB::table('admins')->where('nik',$nik)->get();
-        return view('admin.layouts.editkaryawan', [
-            "title" => "Edit Data Karyawan", 'admins' => $admins,
-        ]);
-    }
-
-    /**
-     * Update Data Karyawan.
-     */
-    public function update(Request $request, $nik){
-        // update data pegawai
-	    DB::table('admins')->where('nik',$request->nik)->update([
-            'nik'           =>$request->nik,
-            'name'          =>$request->name,
-            'tempat_lahir'  =>$request->tempat_lahir,
-            'tgl_lahir'     =>$request->tgl_lahir,
-            'agama'         =>$request->agama,
-            'jenis_kelamin' =>$request->jenis_kelamin,
-            'no_hp'         =>$request->no_hp,
-            'email'         =>$request->email,
-            'alamat'        =>$request->alamat,
-            'jabatan'       =>$request->jabatan,
-            'bagian'        =>$request->bagian,
-            'tgl_masuk'     =>$request->tgl_masuk,
-        ]);
-
-        // $admins->update($request->all());
-        return redirect('/admin/datakaryawan')->with('warning', 'Berhasil merubah data karyawan');
-    }
-
-    /**
-     * Detail Data Karyawan.
-     */
-    public function detail($nik){
-        $admins = DB::table('admins')->where('nik',$nik)->get();
-        return view('admin.layouts.detailkaryawan', [
-            "title" => "Detail Data Karyawan", 'admins' => $admins,
-        ]);
-    }
-
-    /**
-     * Hapus Data Karyawan.
-     */
-    public function destroy($nik){
-        $admins = Admin::select('*')
-            ->where('nik', $nik)
-            ->delete();
-            return redirect('/admin/datakaryawan')->with('gagal', 'Berhasil Menghapus data karyawan');
-    }
-
-     /**
-     * Data Cuti Karyawan.
+     * Menampilkan Data Cuti Karyawan.
      */
     public function datacuti(){
         // $data_cutis = DB::select('SELECT * FROM data_cutis RIGHT JOIN admins
@@ -218,69 +80,9 @@ class AdminController extends Controller
             "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
         ]);
     }
-    /**
-     * Detail Cuti Karyawan.
-     */
-
-    public function detailcuti($nik){
-        // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
-        $data_cutis = DB::table('data_cutis')
-                    ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
-                    ->where('admins.nik', $nik)
-                    ->get();
-        return view('admin.layouts.detailcuti', [
-            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
-        ]);
-    }
-    /**
-     * Update Cuti Karyawan.
-     */
-    public function updatecuti(Request $request, $nik){
-        $now = Carbon::now()->year; // Tahun sekarang
-        $data_cutis = DB::table('data_cutis')
-                        ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
-                        ->where('admins.nik', $nik)
-                        ->get();
-
-        foreach ($data_cutis as $row) {
-            if (empty($row->id_cuti)) {
-                return redirect('/admin/datacuti')->with('gagal', 'Data Cuti Belum Terisi...!!! Silahkan Tambah Data Cuti...');
-            }
-            else if($row->periode == $now){
-                return redirect('/admin/datacuti')->with('gagal', 'Periode Cuti Masih Berlaku...!!! Silahkan Tunggu Periode Selanjutnya Untuk Update Data...');
-            }
-            else if($row->periode != $now){
-                $ID         = $row->id_cuti;
-                $NIK        = $row->nik;
-                $NAMA       = $row->nama_cuti;
-                $PERIODE    = $row->periode;
-                $HAK        = $row->hak_cuti;  //12
-                $AMBIL      = $row->cuti_diambil; //0
-                $SISA       = $row->sisa_cuti;//12
-
-                //menghitung jumlah akumulasi cuti
-                $periode    = Carbon::now()->year;
-                $hak2       = $HAK+12; //12+12=24;
-                $ambil2     = $AMBIL; //0
-                $sisa2      = $hak2-$ambil2; //24-0=24
-
-                DB::table('data_cutis')
-                    ->where('nik', '=', $nik)
-                    ->update([
-                        'periode'       => $periode,
-                        'hak_cuti'      => $hak2,
-                        'cuti_diambil'  => $ambil2,
-                        'sisa_cuti'     => $sisa2,
-                ]);
-                    return redirect('/admin/datacuti')->with('sukses', 'Data Berhasil DI Update...!!!');
-            }
-        }
-    }
-
-
 
     /**
-     * Laporan Cuti Karyawan.
+     * Menampilkan Laporan Cuti Karyawan.
      */
     public function laporancuti(){
         return view('admin.layouts.laporancuti', [
@@ -289,89 +91,82 @@ class AdminController extends Controller
     }
 
     /**
-     * Kelola User.
+     * Menampilkan Kelola User.
      */
     public function user(){
+        $users = DB::table('users')
+                    ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
+                    ->whereIn('admins.jabatan', ['Admin','Manager'])
+                    ->get();
+
         return view('admin.layouts.user', [
-            "title" => "Data User"
+            "title" => "Kelola User", 'users' => $users,
         ]);
     }
+
     /**
-     * Kelola User.
+     * Menampilkan Profil Karyawan.
      */
-    // public function updateuser(Request $request, $nik){
-    //                 $nik            = $request->input('nik');
-    //                 $username       = $request->input('username');
-    //                 $username2      = $request->input('username2');
-    //                 $password_lama  = $request->input('password');
-    //                 $password_baru  = $request->input('password2');
-    //                 $konf_password  = $request->input('password3');
-    //                 // cek old password
-    //                 $user = User::where('nik', $nik)->where('password', $password_lama)->first();
+    public function profil(){
+        return view('admin.layouts.profil', [
+            "title" => "Profil Karyawan"
+        ]);
+    }
 
-    //                 if (!$user) {
-    //                     $message = 'Password lama tidak sesuai!, silahkan ulangi kembali!';
-    //                     // return response()->json(['status' => 'error', 'message' => $message]);
-    //                     // Tampilkan pesan sukses ke halaman sebelumnya
-    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
-    //                 }
-
-    //                 // validasi input konfirm password
-    //                 else if ($password_baru != $konf_password) {
-    //                     $message = 'Ganti Password Gagal! Password baru dan Password Konfirm Harus Sama';
-    //                     // return response()->json(['status' => 'error', 'message' => $message]);
-    //                     // Tampilkan pesan sukses ke halaman sebelumnya
-    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
-    //                 }
-
-    //                 // validasi input konfirm password
-    //                 else if ($password_lama == $konf_password) {
-    //                     $message = 'Ganti Password Gagal! Password lama dan Password Baru Harus Sama';
-    //                     // return response()->json(['status' => 'error', 'message' => $message]);
-    //                     // Tampilkan pesan sukses ke halaman sebelumnya
-    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
-    //                 }
-
-    //                 // validasi input konfirm username
-    //                 else if ($username == $username2) {
-    //                     $message = 'Ganti Username Gagal!';
-    //                     // return response()->json(['status' => 'error', 'message' => $message]);
-    //                     // Tampilkan pesan sukses ke halaman sebelumnya
-    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
-    //                 }
-
-    //                 else {
-    //                     // update data
-    //                     // Lakukan perubahan pada data pengguna di database
-    //                     $user = User::find($nik);
-    //                     $user->username = $request->input('username2');
-
-    //                     $user->password = Hash::make($request->input('password3'));
-    //                     $user->save();
-    //                     // setelah berhasil update
-    //                     $message = 'Ganti Password dan Username Berhasil...!!!';
-    //                     // return response()->json(['status' => 'error', 'message' => $message]);
-    //                     // Tampilkan pesan sukses ke halaman sebelumnya
-    //                     return redirect()->back()->with('success2', 'Password berhasil diubah!');
-    //                 }
-
-    // }
-    public function updateuser(Request $request){
+    /**
+     * tambah user.
+     */
+    public function tambahuser(Request $request){
         $request->validate([
-            'password' => 'required',
-            'password2' => 'required|',
-            'password3' => 'required|same:password2',
+            'password'  => 'required',
+            'password2' => 'required',
+            'password3' => 'required',
           ]);
 
         $user = Auth::user();
-
+        // Password lama tidak sesuai dengan yang ada di database
         if (!Hash::check($request->password, $user->password)) {
-            return redirect()->back()->withErrors(['password' => 'Password lama tidak sesuai']);
+            return redirect()->back()->with('error', 'Password Lama Salah!');
         }
-        $user->password = Hash::make($request->password2);
-        $user->save();
+        // cek apakah password baru sesuai dengan password konfirmasi
+        else if ($request->password2 != $request->password3) {
+            return redirect()->back()->with('error', 'Password Baru Tidak Sesuai Dengan Konfirmasi Password!');
+        }
+        // cek apakah password lama sesuai dengan yang ada di database
+        else if (Hash::check($request->password, $user->password)) {
+            $user->password = Hash::make($request->password2);
+            $user->save();
 
-        Toastr::success('Password berhasil diperbarui.');
-        return redirect()->back();
+            // Simpan data dan redirect back
+            return redirect()->back()->with('success', 'Password Berhasil Di Ubah!');
+        }
+    }
+    /**
+     * Update User.
+     */
+    public function updateuser(Request $request){
+        $request->validate([
+            'password'  => 'required',
+            'password2' => 'required',
+            'password3' => 'required',
+          ]);
+
+        $user = Auth::user();
+        // Password lama tidak sesuai dengan yang ada di database
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->with('error', 'Password Lama Salah!');
+        }
+        // cek apakah password baru sesuai dengan password konfirmasi
+        else if ($request->password2 != $request->password3) {
+            return redirect()->back()->with('error', 'Password Baru Tidak Sesuai Dengan Konfirmasi Password!');
+        }
+        // cek apakah password lama sesuai dengan yang ada di database
+        else if (Hash::check($request->password, $user->password)) {
+            $user->password = Hash::make($request->password2);
+            $user->save();
+
+            // Simpan data dan redirect back
+            return redirect()->back()->with('success', 'Password Berhasil Di Ubah!');
+        }
     }
 }

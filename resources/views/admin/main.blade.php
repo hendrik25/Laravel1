@@ -27,8 +27,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <!-- other head elements -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -50,6 +50,34 @@
         </div>
         <!-- /.content-wrapper -->
     </div>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: '{{ session('warning') }}',
+            });
+        </script>
+    @endif
 
     <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
     <script src="{{ asset('/') }}plugins/jquery-ui/jquery-ui.min.js"></script>

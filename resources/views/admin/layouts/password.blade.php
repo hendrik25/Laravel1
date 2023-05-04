@@ -10,53 +10,23 @@
             @endphp
         <a href="" id="close" title="Close" class="close">X</a><br>
         <center><h2> FORM UBAH PASSWORD</h2></center>
-        <hr align=left color="#00008B"><br>
+        <hr align=left color="#00008B">
         <form method="post" action="/admin/user/update">
             @csrf
             @if($admins2)
                 <div class="row">
                     <div class="col-sm-12">
-                        <table width="auto" border="0" cellpadding="5">
-                            <tr>
-                                <td><label class="col-form-label">NIK</label></td>
-                                <td width="auto"><input type="text" name="nik" class="form-control" value="{{ $admins2->nik }}" readonly>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="col-form-label">NAMA</label></td>
-                                <td><input type="text" name="username" class="form-control" value="{{ $admins2->name }}" readonly>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="col-form-label">PASSWORD LAMA</label></td>
-                                <td><input type="password" name="password" class="form-control">
-                                    @error('password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="col-form-label">PASSWORD BARU</label></td>
-                                <td>
-                                    <input type="password" name="password2" class="form-control">
-                                    @error('password2')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label class="col-form-label">PASSWORD CONFIRM</label></td>
-                                <td>
-                                    <input type="password" name="password3" class="form-control">
-                                    @error('password3')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><input type="submit" name="simpan" value="SIMPAN" class="btn btn-success" style="width: 100%;"></td>
-                                <td></td>
-                            </tr>
+                                <label class="col-form-label">NIK</label>
+                                <input type="text" name="nik" class="form-control" value="{{ $admins2->nik }}" readonly>
+                                <label class="col-form-label">NAMA</label>
+                                <input type="text" name="username" class="form-control" value="{{ $admins2->name }}" readonly>
+                                <label class="col-form-label">PASSWORD LAMA</label>
+                                <input type="password" name="password" class="form-control">
+                                <label class="col-form-label">PASSWORD BARU</label>
+                                <input type="password" name="password2" class="form-control">
+                                <label class="col-form-label">PASSWORD CONFIRM</label>
+                                <input type="password" name="password3" class="form-control">
+                                <input type="submit" name="simpan" value="SIMPAN" class="btn btn-success" style="width: 100%;">
                         </table>
                     </div>
                 </div>
@@ -64,7 +34,3 @@
         </form>
     </div>
 </div>
-
-@if(session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
-@endif

@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DataKarController;
+use App\Http\Controllers\DataCutiController;
+
+use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\DataCuti;
@@ -39,41 +42,19 @@ Route::group(['middleware' => ['auth']], function(){
         Route::post('/admin/user/update', [AdminController::class, 'updateuser'])->name('updateuser');
         //profil
         Route::get('/admin/profil', [AdminController::class, 'profil'])->name('profil');
+
         //datakaryawan
-        Route::get('/admin/tambahkaryawan', [AdminController::class, 'tambahkaryawan'])->name('tambah');
-        Route::post('/admin/tambah', [AdminController::class, 'tambahdata'])->name('tambahdata');
-        Route::get('/admin/edit/{nik}', [AdminController::class, 'edit'])->name('edit');
-        Route::post('/admin/update{nik}', [AdminController::class, 'update']);
-        Route::get('/admin/detail/{nik}', [AdminController::class, 'detail'])->name('detail');
-        Route::get('/admin/delete/{nik}', [AdminController::class, 'destroy']);
+        Route::get('/admin/tambahkaryawan', [DataKarController::class, 'tambahkaryawan'])->name('tambah');
+        Route::post('/admin/tambah', [DataKarController::class, 'tambahdata'])->name('tambahdata');
+        Route::get('/admin/edit/{nik}', [DataKarController::class, 'edit'])->name('edit');
+        Route::post('/admin/update{nik}', [DataKarController::class, 'update']);
+        Route::get('/admin/detail/{nik}', [DataKarController::class, 'detail'])->name('detail');
+        Route::get('/admin/delete/{nik}', [DataKarController::class, 'destroy']);
 
         //datacuti
-        Route::get('/admin/detailcuti/{nik}', [AdminController::class, 'detailcuti'])->name('detailcuti');
-        Route::get('/admin/tambahcuti/{nik}', function (Request $request, $nik) {
-            $admins     = DB::table('admins')->where('nik',$nik)->first()->tgl_masuk;
-            $now        = Carbon::now(); // Tanggal sekarang
-            $masuk      = Carbon::parse($admins); // Tanggal Masuk
-            $tahun      = $masuk->diffInYears($now);  // Menghitung Masa Kerja
-            if ($posts = DataCuti::where('nik', $nik)->get('id_cuti')->isNotEmpty()) {
-                return redirect('/admin/datacuti')->with('warning', 'Data Cuti Sudah Terisi...!!! Silahkan Update Data Cuti...');
-            }
-            else if($tahun>=1){
-                $data_cutis = DB::table('data_cutis')->insert([
-                    'nik'           => $nik,
-                    'nama_cuti'     => 'Cuti Tahunan',
-                    'periode'       => Carbon::now()->format('Y'),
-                    'hak_cuti'      => '12',
-                    'cuti_diambil'  => '0',
-                    'sisa_cuti'     => '12',
-                ]);
-                return redirect('/admin/datacuti')->with('sukses', 'Data Cuti Berhasil Ditambah, Sesuai Dengan Periode Tahun ini...!!!');
-            }
-            else if($tahun<1){
-                return redirect('/admin/datacuti')->with('gagal', 'Masa Kerja Kurang Dari 1 Tahun...!!! Silahkan Menunggu Periode Selanjutnya...');
-            }
-        });
-        // Route::get('/admin/tambahcuti/{nik}', [AdminController::class, 'tambahcuti'])->name('tambahcuti');
-        Route::get('/admin/updatecuti/{nik}', [AdminController::class, 'updatecuti'])->name('updatecuti');
+        Route::get('/admin/detailcuti/{nik}', [DataCutiController::class, 'detailcuti'])->name('detailcuti');
+        Route::get('/admin/tambahcuti/{nik}', [DataCutiController::class, 'tambahcuti'])->name('tambahcuti');
+        Route::get('/admin/updatecuti/{nik}', [DataCutiController::class, 'updatecuti'])->name('updatecuti');
     });
 
     Route::group(['middleware' =>['cekUserLogin:manager']], function(){

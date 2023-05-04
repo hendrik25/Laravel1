@@ -18,26 +18,6 @@
         <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                            @if(session()->has('sukses'))
-                                <div class="alert alert-success alert-block">
-                                <strong>{{ session()->get('sukses') }}</strong>
-                                </div>
-                            @endif
-                            @if(session()->has('warning'))
-                                <div class="alert alert-warning alert-block">
-                                <strong>{{ session()->get('warning') }}</strong>
-                                </div>
-                            @endif
-                            @if(session()->has('gagal'))
-                                <div class="alert alert-danger alert-block">
-                                <strong>{{ session()->get('gagal') }}</strong>
-                                </div>
-                            @endif
-                            @if(session()->has('abu'))
-                                <div class="alert alert-secondary alert-block">
-                                <strong>{{ session()->get('abu') }}</strong>
-                                </div>
-                            @endif
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>

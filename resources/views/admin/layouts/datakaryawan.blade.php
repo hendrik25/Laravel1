@@ -21,21 +21,6 @@
                         <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Tambah Data Karyawan" class="btn btn-success" name="tambah" value="TAMBAH" onclick="window.location.href='/admin/tambahkaryawan'">
                             <i class="fa fa-users"></i>
                         </button><br><br>
-                            @if(session()->has('sukses'))
-                                <div class="alert alert-success alert-block">
-                                <strong>{{ session()->get('sukses') }}</strong>
-                                </div>
-                            @endif
-                            @if(session()->has('warning'))
-                                <div class="alert alert-warning alert-block">
-                                <strong>{{ session()->get('warning') }}</strong>
-                                </div>
-                            @endif
-                            @if(session()->has('gagal'))
-                                <div class="alert alert-danger alert-block">
-                                <strong>{{ session()->get('gagal') }}</strong>
-                                </div>
-                            @endif
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
