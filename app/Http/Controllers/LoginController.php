@@ -18,10 +18,8 @@ class LoginController extends Controller
                     return redirect()->intended('manager');
             }
         }
-
         return view('login.index');
     }
-
     // public function proses(Request $request){
     //     $request->validate([
     //         'username' => 'required',
@@ -36,7 +34,7 @@ class LoginController extends Controller
     //     $kredensial = $request->only('username', 'password');
 
     //     if(Auth::attempt($kredensial)){
-    //         // $request->session()->regenerate();
+    //         $request->session()->regenerate();
     //         $user = Auth::user();
     //         if($user = Auth::user()){
     //             if($user->level == 'admin'){
@@ -52,6 +50,7 @@ class LoginController extends Controller
     //         'username' => 'Maaaf username atau password anda salah',
     //     ])->onlyInput('username');
     // }
+
     public function proses(Request $request){
         // validasi login
         $this->validate($request, [
@@ -78,6 +77,7 @@ class LoginController extends Controller
             ])->onlyInput('username');
         }
     }
+
 
     public function logout(Request $request){
         Auth::logout();

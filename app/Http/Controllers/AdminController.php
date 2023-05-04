@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Toastr;
 
 class AdminController extends Controller
 {
@@ -295,7 +296,66 @@ class AdminController extends Controller
             "title" => "Data User"
         ]);
     }
+    /**
+     * Kelola User.
+     */
+    // public function updateuser(Request $request, $nik){
+    //                 $nik            = $request->input('nik');
+    //                 $username       = $request->input('username');
+    //                 $username2      = $request->input('username2');
+    //                 $password_lama  = $request->input('password');
+    //                 $password_baru  = $request->input('password2');
+    //                 $konf_password  = $request->input('password3');
+    //                 // cek old password
+    //                 $user = User::where('nik', $nik)->where('password', $password_lama)->first();
 
+    //                 if (!$user) {
+    //                     $message = 'Password lama tidak sesuai!, silahkan ulangi kembali!';
+    //                     // return response()->json(['status' => 'error', 'message' => $message]);
+    //                     // Tampilkan pesan sukses ke halaman sebelumnya
+    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
+    //                 }
+
+    //                 // validasi input konfirm password
+    //                 else if ($password_baru != $konf_password) {
+    //                     $message = 'Ganti Password Gagal! Password baru dan Password Konfirm Harus Sama';
+    //                     // return response()->json(['status' => 'error', 'message' => $message]);
+    //                     // Tampilkan pesan sukses ke halaman sebelumnya
+    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
+    //                 }
+
+    //                 // validasi input konfirm password
+    //                 else if ($password_lama == $konf_password) {
+    //                     $message = 'Ganti Password Gagal! Password lama dan Password Baru Harus Sama';
+    //                     // return response()->json(['status' => 'error', 'message' => $message]);
+    //                     // Tampilkan pesan sukses ke halaman sebelumnya
+    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
+    //                 }
+
+    //                 // validasi input konfirm username
+    //                 else if ($username == $username2) {
+    //                     $message = 'Ganti Username Gagal!';
+    //                     // return response()->json(['status' => 'error', 'message' => $message]);
+    //                     // Tampilkan pesan sukses ke halaman sebelumnya
+    //                     return redirect()->back()->with('gagal2', 'Password gagal diubah!');
+    //                 }
+
+    //                 else {
+    //                     // update data
+    //                     // Lakukan perubahan pada data pengguna di database
+    //                     $user = User::find($nik);
+    //                     $user->username = $request->input('username2');
+
+    //                     $user->password = Hash::make($request->input('password3'));
+    //                     $user->save();
+    //                     // setelah berhasil update
+    //                     $message = 'Ganti Password dan Username Berhasil...!!!';
+    //                     // return response()->json(['status' => 'error', 'message' => $message]);
+    //                     // Tampilkan pesan sukses ke halaman sebelumnya
+    //                     return redirect()->back()->with('success2', 'Password berhasil diubah!');
+    //                 }
+
+    // }
     public function updateuser(Request $request){
         $request->validate([
             'password' => 'required',
@@ -314,5 +374,4 @@ class AdminController extends Controller
         Toastr::success('Password berhasil diperbarui.');
         return redirect()->back();
     }
-
 }

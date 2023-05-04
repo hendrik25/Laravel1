@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -26,13 +27,9 @@ class User extends Authenticatable
         'password',
         'level'
     ];
-    /**
-     * Get the user that owns the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+
     public function admin(){
-        return $this->belongsTo('App\Models\Admin');
+        return $this->hasOne(Admin::class, 'nik', 'nik');
     }
 
     /**

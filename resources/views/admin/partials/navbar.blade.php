@@ -36,7 +36,7 @@
                     <!-- User -->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown">
-                            <i class="far fa-user"></i> {{ $admins2->jabatan }}
+                            <i class="far fa-user"></i> Admin
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-item dropdown-header">{{ $admins2->name }}</span>

@@ -17,9 +17,6 @@
     <section class="content">
         <div class="container-fluid">
                 <div class="card">
-                    {{-- <div class="card-header">
-                        <h3 class="card-title">DataTable</h3>
-                    </div> --}}
                     <div class="card-body">
                         <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Tambah Data Karyawan" class="btn btn-success" name="tambah" value="TAMBAH" onclick="window.location.href='/admin/tambahkaryawan'">
                             <i class="fa fa-users"></i>

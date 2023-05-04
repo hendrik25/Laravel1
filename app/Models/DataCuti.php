@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DataCuti extends Model
 {
@@ -29,6 +30,6 @@ class DataCuti extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function admin(){
-        return $this->belongsTo('App\Models\Admin');
+        return $this->hasOne(Admin::class, 'nik', 'nik');
     }
 }
