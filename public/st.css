@@ -1,0 +1,68 @@
+.modalDialog {
+        position: fixed;
+        font-family: Arial, Helvetica, sans-serif;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.8);
+        z-index: 99999;
+        opacity:0;
+        transition: opacity 200ms ease-in;
+        pointer-events: none;
+    }
+    .modalDialog:target {opacity:1; pointer-events: auto;}
+    .modalDialog > div {
+        width: 450px;
+        position: relative;
+        margin: 2% auto;
+        padding: 0px 15px 15px 15px;
+        border-radius: 10px;
+        background: #fff;
+        background: linear-gradient(#fff, #aaa);
+    }
+    .close:hover { background:#00d9ff; }
+    .close {
+        background: #606061;
+        color: #FFFFFF;
+        line-height: 25px;
+        position: absolute;
+        text-align: center;
+        top: -10px;
+        right: -12px;
+        width: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 12px;
+        box-shadow: 1px 1px 3px #000;
+    }
+
+input {
+    width: 100%;
+    padding: 10px 20px;
+    margin: 2px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.rounded-image{
+    border-radius: 200px;
+    -webkit-border-radius: 200px;
+    -moz-border-radius: 200px;
+}
