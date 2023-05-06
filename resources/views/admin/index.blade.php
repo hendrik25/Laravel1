@@ -47,21 +47,37 @@
                             <a href="/admin/laporan" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+
+                @php
+                    $users = DB::table('users')
+                            ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
+                            ->whereIn('admins.jabatan', ['Manager','Kepala Bagian', 'Operator'])
+                            ->whereNull('users.username')
+                            ->whereNull('users.password')
+                            ->get();
+                    $count3=$users->count();
+                @endphp
                 <!--User Registrasi-->
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{$count3 }}</h3>
                             <p>User Registrations</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="/" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="/admin/user" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 @php
-                    $count4  = DB::table('users')->count();
+                    $users = DB::table('users')
+                            ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
+                            ->whereIn('admins.jabatan', ['Manager','Kepala Bagian', 'Operator'])
+                            ->whereNotNull('users.username')
+                            ->whereNotNull('users.password')
+                            ->get();
+                    $count4=$users->count();
                 @endphp
                 <!--kelola User-->
                 <div class="col-lg-3 col-6">

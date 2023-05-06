@@ -11,10 +11,10 @@ class LoginController extends Controller
 {
     public function index(){
         if($user = Auth::user()){
-            if($user->level == 'admin'){
+            if($user->level == 'Admin'){
                 return redirect()->intended('admin');
             }
-            else if($user->level == 'manager'){
+            else if($user->level == 'Manager'){
                     return redirect()->intended('manager');
             }
         }
@@ -66,9 +66,9 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('username' , 'password'))) {
             $request->session()->regenerate();
             // cek apakah user memiliki level sebagai admin
-            if (Auth::user()->level == 'admin') {
+            if (Auth::user()->level == 'Admin') {
                 return redirect()->intended('admin');
-            } else if(Auth::user()->level == 'manager'){
+            } else if(Auth::user()->level == 'Manager'){
                 return redirect()->intended('manager');
             }
         } else {

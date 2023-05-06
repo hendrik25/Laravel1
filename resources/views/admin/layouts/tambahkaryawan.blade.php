@@ -131,7 +131,7 @@
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">ALAMAT</label></td>
-                                            <td><textarea name="alamat" class="form-control
+                                            <td><textarea name="alamat" rows="5" class="form-control
                                                 @error('alamat') is-invalid @enderror"  value="{{ old('alamat') }}">
                                                 @error('alamat')
                                                     <div class="invalid-feedback">
@@ -152,10 +152,10 @@
                                                     </div>
                                                 @enderror
                                                     <option value="-">--- Pilih ---</option>
-                                                    <option value="Operator">Operator</option>
-                                                    <option value="Kepala Bagian">Kepala Bagian</option>
-                                                    <option value="Manager">Manager</option>
                                                     <option value="Admin">Admin</option>
+                                                    <option value="Manager">Manager</option>
+                                                    <option value="Kepala Bagian">Kepala Bagian</option>
+                                                    <option value="Operator">Operator</option>
                                                 </select>
                                             </td>
                                         </tr>

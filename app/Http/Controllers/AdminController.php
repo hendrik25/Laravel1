@@ -56,7 +56,7 @@ class AdminController extends Controller
      */
     public function datakaryawan(Admin $admins){
         $admins  = DB::table('admins')
-                    ->whereIn('jabatan', ['Admin','Manager'])
+                    ->whereIn('jabatan', ['Manager'])
                     ->get();
 
         // $admins = DB::select('SELECT * FROM admins WHERE jabatan IN ("Admin", "Manager")');
@@ -91,20 +91,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Menampilkan Kelola User.
-     */
-    public function user(){
-        $users = DB::table('users')
-                    ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
-                    ->whereIn('admins.jabatan', ['Admin','Manager'])
-                    ->get();
-
-        return view('admin.layouts.user', [
-            "title" => "Kelola User", 'users' => $users,
-        ]);
-    }
-
-    /**
      * Menampilkan Profil Karyawan.
      */
     public function profil(){
@@ -114,33 +100,99 @@ class AdminController extends Controller
     }
 
     /**
+     * Menampilkan Kelola User.
+     */
+    public function user(){
+        $users = DB::table('users')
+                    ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
+                    ->whereIn('admins.jabatan', ['Manager','Kepala Bagian', 'Operator'])
+                    ->get();
+
+        return view('admin.layouts.user', [
+            "title" => "Kelola User", 'users' => $users,
+        ]);
+    }
+
+    /**
      * tambah user.
      */
-    public function tambahuser(Request $request){
-        $request->validate([
-            'password'  => 'required',
-            'password2' => 'required',
-            'password3' => 'required',
-          ]);
+    public function regist(Request $request, $nik) {
+        // cek apakah password dan password confirm sama
+        if ($request->password !== $request->password2) {
+            return redirect()->back()->with('error', 'Password dan konfirmasi password tidak sama');
+        } else if (empty($request->username) || empty($request->password)) {
+            return redirect()->back()->with('error', 'Username dan password harus diisi');
+        } else {
+            // validasi input
+            $request->validate([
+                'nik'       => 'required',
+                'username'  => 'required',
+                'password'  => 'required',
+                'password2' => 'required',
+                'level'     => 'required',
+            ]);
 
-        $user = Auth::user();
-        // Password lama tidak sesuai dengan yang ada di database
-        if (!Hash::check($request->password, $user->password)) {
-            return redirect()->back()->with('error', 'Password Lama Salah!');
-        }
-        // cek apakah password baru sesuai dengan password konfirmasi
-        else if ($request->password2 != $request->password3) {
-            return redirect()->back()->with('error', 'Password Baru Tidak Sesuai Dengan Konfirmasi Password!');
-        }
-        // cek apakah password lama sesuai dengan yang ada di database
-        else if (Hash::check($request->password, $user->password)) {
-            $user->password = Hash::make($request->password2);
-            $user->save();
+            // simpan data ke dalam database
+            User::create([
+                'nik'       => $nik,
+                'username'  => $request->username,
+                'password'  => bcrypt($request->password),
+                'level'     => $request->level,
+            ]);
 
-            // Simpan data dan redirect back
-            return redirect()->back()->with('success', 'Password Berhasil Di Ubah!');
+            // redirect ke halaman sebelumnya
+            return redirect()->back()->with('success', 'Data Berhasil Di Registrasi');
         }
     }
+
+
+    public function edit(Request $request, $nik){
+        if ($request->has('edit')) {
+            $nik = $request->input('nik');
+            $username = $request->input('username');
+            $password = $request->input('password');
+            $password2 = $request->input('password2');
+            $level = $request->input('level');
+
+            // cek apakah password lama dan username sudah sesuai
+            $user = User::where('nik', $nik)->where('username', $username)->first();
+            if (!$user) {
+                return redirect()->back()->with('error', 'Data user tidak ditemukan.');
+            }
+
+            // cek apakah password lama benar
+            if (!Hash::check($password, $user->password)) {
+                return redirect()->back()->with('error', 'Password lama salah.');
+            }
+
+            // cek apakah password baru sesuai dengan konfirmasi password
+            if ($password2 !== $request->input('password3')) {
+                return redirect()->back()->with('error', 'Konfirmasi password tidak sesuai.');
+            }
+
+            // update data user
+            $user->level = $level;
+            if ($password2) {
+                $user->password = Hash::make($password2);
+            }
+            $user->save();
+
+            return redirect()->back()->with('success', 'Data user berhasil diupdate.');
+        }
+
+    }
+
+    /**
+     * Hapus user.
+     */
+    public function destroy($nik){
+        $user = User::select('*')
+            ->where('nik', $nik)
+            ->delete();
+
+        return redirect()->back()->with('success', 'User berhasil dihapus');
+    }
+
     /**
      * Update User.
      */
@@ -169,4 +221,5 @@ class AdminController extends Controller
             return redirect()->back()->with('success', 'Password Berhasil Di Ubah!');
         }
     }
+
 }

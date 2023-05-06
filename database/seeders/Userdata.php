@@ -18,15 +18,9 @@ class Userdata extends Seeder
         $user = [
             [
                 'nik'           => '20160900050',
-                'username'      => 'hendrik',
+                'username'      => 'admin',
                 'password'      => bcrypt('12345'),
-                'level'         => 'admin',
-            ],
-            [
-                'nik'           => '20160900051',
-                'username'      => 'novi',
-                'password'      => bcrypt('12345'),
-                'level'         => 'manager',
+                'level'         => 'Admin',
             ],
         ];
 
@@ -49,48 +43,25 @@ class Userdata extends Seeder
                 'bagian'        => 'Development',
                 'tgl_masuk'     => '2016-09-08',
             ],
-            [
-                'nik'           => '20160900051',
-                'name'          => 'Novita Elinda',
-                'tempat_lahir'  => 'Tangerang',
-                'tgl_lahir'     => '1999-11-15',
-                'agama'         => 'Islam',
-                'jenis_kelamin' => 'Perempuan',
-                'no_hp'         => '021',
-                'email'         => 'novik@gmail.com',
-                'alamat'        => 'Cadas',
-                'jabatan'       => 'Manager',
-                'bagian'        => 'Development',
-                'tgl_masuk'     => '2016-09-08',
-            ],
         ];
 
         foreach($admins as $key2){
             Admin::create($key2);
         }
 
-        $cutis = [
-            [
-                'nik'           => '20160900050',
-                'nama_cuti'     => 'Cuti Tahunan',
-                'periode'       => '2022',
-                'hak_cuti'      => '12',
-                'cuti_diambil'  => '0',
-                'sisa_cuti'     => '12',
-            ],
-            // [
-            //     'nik'           => '20160900051',
-            //     'nama_cuti'     => 'Cuti Tahunan',
-            //     'periode'       => '2022',
-            //     'hak_cuti'      => '12',
-            //     'cuti_diambil'  => '0',
-            //     'sisa_cuti'     => '12',
+        // $cutis = [
+        //     [
+        //         'nik'           => '20160900050',
+        //         'nama_cuti'     => 'Cuti Tahunan',
+        //         'periode'       => '2022',
+        //         'hak_cuti'      => '12',
+        //         'cuti_diambil'  => '0',
+        //         'sisa_cuti'     => '12',
+        //     ],
+        // ];
 
-            // ],
-        ];
-
-        foreach($cutis as $key3){
-            DataCuti::create($key3);
-        }
+        // foreach($cutis as $key3){
+        //     DataCuti::create($key3);
+        // }
     }
 }

@@ -45,7 +45,7 @@
                                     <i class="fas fa-user mr-3"></i> My Profile
                                 </a>
                             <div class="dropdown-divider"></div>
-                            <a href="#ubahpassword" class="dropdown-item">
+                            <a href="#ubahpassword" class="dropdown-item" data-toggle="modal">
                                 <i class="fas fa-key mr-3"></i> Change Password
                             </a>
                             <div class="dropdown-divider"></div>
