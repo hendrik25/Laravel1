@@ -28,7 +28,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/manager/riwayat" class="nav-link">
+                                        <a href="/manager/riwayat2" class="nav-link">
                                             <i class="far fa-list-alt nav-icon"></i>
                                             <p>Riwayat Vertifikasi</p>
                                         </a>
@@ -36,13 +36,13 @@
                                 </ul>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="/manager/datakaryawan" class="nav-link">
+                                <a href="/manager/karyawandata" class="nav-link">
                                     <i class="nav-icon fas fa-file"></i>
                                     <p>Data Karyawan</p>
                                 </a>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="/manager/datacuti" class="nav-link">
+                                <a href="/manager/cutidata2" class="nav-link">
                                     <i class="nav-icon fas fa-database"></i>
                                     <p>Data Cuti Karyawan</p>
                                 </a>

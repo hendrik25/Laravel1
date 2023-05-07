@@ -14,53 +14,127 @@ use Illuminate\Support\Facades\Hash;
 class DataCutiController extends Controller
 {
     /**
+     * Menampilkan Data Cuti Karyawan.
+     */
+    public function cutidata(){
+        // $data_cutis = DB::select('SELECT * FROM data_cutis RIGHT JOIN admins
+        //                 on admins.nik=data_cutis.nik WHERE admins.jabatan');
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
+                    ->whereIn('admins.jabatan', ['Manager', 'Kepala Bagian', 'Operator'])
+                    ->get();
+
+        return view('admin.layouts.cutidata', [
+            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+    public function cutidata2(){
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
+                    ->whereIn('admins.jabatan', ['Kepala Bagian', 'Operator'])
+                    ->get();
+
+        return view('manager.layouts.cutidata', [
+            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+
+    /**
      * Detail Cuti Karyawan.
      */
-
-     public function detailcuti($nik){
+    public function cutidetail($nik){
         // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
         $data_cutis = DB::table('data_cutis')
                     ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
                     ->where('admins.nik', $nik)
                     ->get();
-        return view('admin.layouts.detailcuti', [
-            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
+        return view('admin.layouts.cutidetail', [
+            "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
         ]);
     }
+    public function cutidetail2($nik){
+        // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('manager.layouts.cutidetail', [
+            "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+
     /**
      * Tambah Cuti Karyawan.
      */
-    public function tambahcuti(Request $request, $nik) {
-        $admins     = DB::table('admins')->where('nik',$nik)->first()->tgl_masuk;
-        $now        = Carbon::now(); // Tanggal sekarang
-        $masuk      = Carbon::parse($admins); // Tanggal Masuk
-        $tahun      = $masuk->diffInYears($now);  // Menghitung Masa Kerja
-        if ($posts = DataCuti::where('nik', $nik)->get('id_cuti')->isNotEmpty()) {
-            return redirect()->back()->with('warning', 'Data Cuti Sudah Terisi...!!! Silahkan Update Data Cuti...');
-            // return redirect('/admin/datacuti')->with('warning', 'Data Cuti Sudah Terisi...!!! Silahkan Update Data Cuti...');
+    public function cutitambah(Request $request, $nik) {
+        // $admins     = DB::table('admins')->where('nik',$nik)->first()->tgl_masuk;
+        // $now        = Carbon::now(); // Tanggal sekarang
+        // $masuk      = Carbon::parse($admins); // Tanggal Masuk
+        // $tahun_masuk = $masuk->year; // Mendapatkan tahun masuk
+        // $tahun      = $masuk->diffInYears($now);  // Menghitung Masa Kerja
+
+        // if($tahun>=1){
+        //     $data_cutis = DB::table('data_cutis')->insert([
+        //         'nik'           => $nik,
+        //         'nama_cuti'     => 'Cuti Tahunan',
+        //         'periode'       => Carbon::now()->format('Y'),
+        //         'hak_cuti'      => '12',
+        //         'cuti_diambil'  => '0',
+        //         'sisa_cuti'     => '12',
+        //     ]);
+        //     return redirect()->back()->with('success', 'Data Cuti Berhasil Ditambah, Sesuai Dengan Periode Tahun ini...!!!');
+        // }
+        // else if($tahun<1){
+        //     return redirect()->back()->with('warning', 'Masa Kerja Kurang Dari 1 Tahun...!!! Silahkan Menunggu Periode Selanjutnya...');
+        // }
+        $admins       = DB::table('admins')->where('nik',$nik)->first()->tgl_masuk;
+        $now          = Carbon::now()->format('Y'); // Tahun sekarang
+        $masuk        = Carbon::parse($admins); // Tanggal Masuk
+        $tahun_masuk  = $masuk->year; // Mendapatkan tahun masuk
+        // $tahun        = $masuk->diffInYears($now);  // Menghitung Masa Kerja
+
+        if($tahun_masuk != $now){
+            $cuti = DB::table('data_cutis')->where('nik', $nik)
+                ->where('periode', Carbon::now()->format('Y'))
+                ->where('nama_cuti', 'Cuti Tahunan')
+                ->first();
+
+                if (!$cuti) {
+                    // hitung sisa cuti
+                    $sisa_cuti = 12;
+                    $periode = Carbon::now()->format('Y');
+                    $selisih_bulan = 12 - $masuk->month;
+
+                    if ($selisih_bulan > 0) {
+                        $sisa_cuti = $sisa_cuti / 12 * $selisih_bulan;
+                    }
+
+                    // tambahkan data cuti baru
+                    $data_cutis = DB::table('data_cutis')->insert([
+                        'nik'           => $nik,
+                        'nama_cuti'     => 'Cuti Tahunan',
+                        'periode'       => $periode,
+                        'hak_cuti'      => $selisih_bulan,
+                        'cuti_diambil'  => '0',
+                        'sisa_cuti'     => $sisa_cuti,
+                    ]);
+
+                    return redirect()->back()->with('success', 'Data Cuti Berhasil Ditambah, Sesuai Dengan Periode Tahun ini...!!!');
+                }
+                else {
+                    return redirect()->back()->with('warning', 'Data Cuti Tahunan Sudah Ada...!!!');
+                }
         }
-        else if($tahun>=1){
-            $data_cutis = DB::table('data_cutis')->insert([
-                'nik'           => $nik,
-                'nama_cuti'     => 'Cuti Tahunan',
-                'periode'       => Carbon::now()->format('Y'),
-                'hak_cuti'      => '12',
-                'cuti_diambil'  => '0',
-                'sisa_cuti'     => '12',
-            ]);
-            return redirect()->back()->with('success', 'Data Cuti Berhasil Ditambah, Sesuai Dengan Periode Tahun ini...!!!');
-            // return redirect('/admin/datacuti')->with('sukses', 'Data Cuti Berhasil Ditambah, Sesuai Dengan Periode Tahun ini...!!!');
+        else{
+            return redirect()->back()->with('warning', 'Belum Memasuki Periode Tahun Baru...!!! Silahkan Menunggu Periode Selanjutnya...');
         }
-        else if($tahun<1){
-            return redirect()->back()->with('warning', 'Masa Kerja Kurang Dari 1 Tahun...!!! Silahkan Menunggu Periode Selanjutnya...');
-            // return redirect('/admin/datacuti')->with('gagal', 'Masa Kerja Kurang Dari 1 Tahun...!!! Silahkan Menunggu Periode Selanjutnya...');
-        }
+
     }
 
     /**
      * Update Cuti Karyawan.
      */
-    public function updatecuti(Request $request, $nik){
+    public function cutiupdate(Request $request, $nik){
         $now = Carbon::now()->year; // Tahun sekarang
         $data_cutis = DB::table('data_cutis')
                         ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
@@ -70,11 +144,9 @@ class DataCutiController extends Controller
         foreach ($data_cutis as $row) {
             if (empty($row->id_cuti)) {
                 return redirect()->back()->with('error', 'Data Cuti Belum Terisi...!!! Silahkan Tambah Data Cuti...');
-                // return redirect('/admin/datacuti')->with('gagal', 'Data Cuti Belum Terisi...!!! Silahkan Tambah Data Cuti...');
             }
             else if($row->periode == $now){
                 return redirect()->back()->with('error', 'Periode Cuti Masih Berlaku...!!! Silahkan Tunggu Periode Selanjutnya Untuk Update Data...');
-                // return redirect('/admin/datacuti')->with('gagal', 'Periode Cuti Masih Berlaku...!!! Silahkan Tunggu Periode Selanjutnya Untuk Update Data...');
             }
             else if($row->periode != $now){
                 $ID         = $row->id_cuti;
@@ -100,7 +172,6 @@ class DataCutiController extends Controller
                         'sisa_cuti'     => $sisa2,
                 ]);
                 return redirect()->back()->with('success', 'Data Cuti Berhasil DI Update...!!!');
-                // return redirect('/admin/datacuti')->with('sukses', 'Data Berhasil DI Update...!!!');
             }
         }
     }

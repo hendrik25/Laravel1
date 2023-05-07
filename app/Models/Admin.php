@@ -43,7 +43,7 @@ class Admin extends Model
     public function datacuti(){
         return $this->hasOne('App\Models\DataCuti');
     }
-    // public function datacuti(): HasOne{
-    //     return $this->hasOne(DataCuti::class);
-    // }
+    public function cuti(){
+        return $this->hasOne('App\Models\Cuti');
+    }
 }

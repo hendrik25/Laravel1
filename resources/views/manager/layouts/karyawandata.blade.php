@@ -17,9 +17,6 @@
     <section class="content">
         <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">DataTable</h3>
-                    </div>
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
@@ -31,7 +28,7 @@
                                     <th>Tempat Lahir</th>
                                     <th>Tanggal Lahir</th>
                                     {{-- <th>Jenis Kelamin</th> --}}
-                                    <th>Email</th>
+                                    {{-- <th>Email</th> --}}
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
                                     <th>No HP</th>
@@ -45,28 +42,22 @@
                                     $no=1;
                                 @endphp
                                 {{-- @foreach($pegawais as $p) --}}
-                                @foreach ( $karyawans as $p )
+                                @foreach ( $admins as $p )
                                     <tr>
                                         <td scope="row">{{ $no++ }}</td>
                                         <td >{{ $p->nik }}</td>
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->tempat_lahir }}</td>
-                                        <td >{{ $p->tgl_lahir }}</td>
-                                        <td >{{ $p->email }}</td>
-                                        <td >{{ $p->level }}</td>
+                                        <td >@php echo date('d-m-Y', strtotime( $p->tgl_lahir )) @endphp </td>
+                                        {{-- <td >{{ $p->jenis_kelamin }}</td> --}}
+                                        {{-- <td >{{ $p->email }}</td> --}}
+                                        <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
                                         <td >{{ $p->no_hp }}</td>
-
                                         <td>
-                                            <a href="/admin/edit/{{ $p->nik }}" onclick="return confirm('Apakah Anda Ingin Merubah Data...?')">
-                                                <button type="submit" class="btn btn-primary" name="edit" value="EDIT">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
-                                            </a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="/admin/delete/{{ $p->nik }}" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data...?')">
-                                                <button type="button" class="btn btn-danger" name="delete" value="DELETE"><i class="fas fa-trash"></i>
+                                            <a href="/manager/karyawandetail/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                                <button type="submit" class="btn btn-warning" name="detail" value="DETAIL">
+                                                    <i class="fas fa-eye"></i>
                                                 </button>
                                             </a>
                                         </td>

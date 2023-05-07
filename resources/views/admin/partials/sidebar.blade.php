@@ -36,13 +36,13 @@
                                 </ul>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="/admin/datakaryawan" class="nav-link">
+                                <a href="/admin/karyawandata" class="nav-link">
                                     <i class="nav-icon fas fa-file"></i>
                                     <p>Data Karyawan</p>
                                 </a>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="/admin/datacuti" class="nav-link">
+                                <a href="/admin/cutidata" class="nav-link">
                                     <i class="nav-icon fas fa-database"></i>
                                     <p>Data Cuti Karyawan</p>
                                 </a>

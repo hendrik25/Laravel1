@@ -19,7 +19,7 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 @php
-                    $count  = DB::table('admins')->whereIn('jabatan', ['Manager'])->count();
+                    $count  = DB::table('admins')->whereIn('jabatan', ['Manager', 'Kepala Bagian', 'Operator'])->count();
                 @endphp
                 <!--Data Karyawan-->
                 <div class="col-lg-3 col-6">
@@ -31,7 +31,7 @@
                         <div class="icon">
                             <i class="ion ion-archive"></i>
                         </div>
-                        <a href="/admin/datakaryawan" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="/admin/karyawandata" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!--Laporan Cuti-->

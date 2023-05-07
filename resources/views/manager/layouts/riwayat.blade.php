@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Vertifikasi Pengajuan Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Riwayat Vertifikasi Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -26,7 +26,11 @@
                                     <th>Nama</th>
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
+                                    <th>Nama Cuti</th>
                                     <th>Jumlah Cuti</th>
+                                    <th>Awal Cuti</th>
+                                    <th>Akhir Cuti</th>
+                                    <th>Keterangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -41,9 +45,13 @@
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
+                                        <td >{{ $p->nama_cuti }}</td>
                                         <td >{{ $p->jumlah_cuti }}</td>
+                                        <td >{{ $p->tgl_awal }}</td>
+                                        <td >{{ $p->tgl_akhir }}</td>
+                                        <td >{{ $p->keterangan }}</td>
                                         <td>
-                                            <a href="/manager/vertifikasidetail2/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
+                                            <a href="/manager/riwayatdetail2/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Data Cuti">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </button>

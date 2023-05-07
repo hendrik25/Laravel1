@@ -20,16 +20,18 @@
             <div class="row">
                 <!--Data Karyawan-->
                 <div class="col-lg-5 col-6">
-
+                    @php
+                        $count  = DB::table('admins')->whereIn('jabatan', ['Manager', 'Kepala Bagian', 'Operator'])->count();
+                    @endphp
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
+                            <h3>{{ $count }}</h3>
                             <p>DATA KARYAWAN</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-archive"></i>
                         </div>
-                        <a href="/manager/datakaryawan" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="/manager/karyawandata" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!--Laporan Cuti-->

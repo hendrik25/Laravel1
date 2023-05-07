@@ -8,20 +8,24 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class DataCuti extends Model
+class Cuti extends Model
 {
     use HasFactory;
-    protected $table = 'data_cutis';
-    protected $primaryKey = 'id_cuti';
+    protected $table = 'cutis';
+    protected $primaryKey = 'id';
     public $timestamps = true;
 
     protected $fillable = [
         'nik',
+        'tgl_pengajuan',
         'nama_cuti',
-        'periode',
-        'hak_cuti',
-        'cuti_diambil',
-        'sisa_cuti',
+        'jumlah_cuti',
+        'tgl_awal',
+        'tgl_akhir',
+        'keterangan',
+        'approval_kabag',
+        'approval_manager',
+        'vertifikasi_admin',
     ];
 
     public function admin(){

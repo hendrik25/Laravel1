@@ -16,10 +16,20 @@
         <link rel="stylesheet" href="{{ asset('/') }}plugins/summernote/summernote-bs4.css">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-        <link href="{{ asset('st.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('/') }}st.css"/>
+
         <!-- DataTables -->
         <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+        <!-- Tooltip -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+        <!-- other head elements -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -41,48 +51,92 @@
         <!-- /.content-wrapper -->
     </div>
 
-  <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
-  <script src="{{ asset('/') }}plugins/jquery-ui/jquery-ui.min.js"></script>
-  <script>
-    $.widget.bridge('uibutton', $.ui.button)
-  </script>
-  <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="{{ asset('/') }}plugins/chart.js/Chart.min.js"></script>
-  <script src="{{ asset('/') }}plugins/sparklines/sparkline.js"></script>
-  <script src="{{ asset('/') }}plugins/jqvmap/jquery.vmap.min.js"></script>
-  <script src="{{ asset('/') }}plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-  <script src="{{ asset('/') }}plugins/jquery-knob/jquery.knob.min.js"></script>
-  <script src="{{ asset('/') }}plugins/moment/moment.min.js"></script>
-  <script src="{{ asset('/') }}plugins/daterangepicker/daterangepicker.js"></script>
-  <script src="{{ asset('/') }}plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-  <script src="{{ asset('/') }}plugins/summernote/summernote-bs4.min.js"></script>
-  <script src="{{ asset('/') }}plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-  <script src="{{ asset('/') }}dist/js/adminlte.js"></script>
-  <script src="{{ asset('/') }}dist/js/pages/dashboard.js"></script>
-  <script src="{{ asset('/') }}dist/js/demo.js"></script>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: '{{ session('warning') }}',
+            });
+        </script>
+    @endif
 
-  <script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-  <script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-  {{-- <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script> --}}
-  <script>
-    $(function () {
-        $("#example1").DataTable({
-        "responsive": true,
-        "autoWidth": false,
+    <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
+    <script src="{{ asset('/') }}plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('/') }}plugins/chart.js/Chart.min.js"></script>
+    <script src="{{ asset('/') }}plugins/sparklines/sparkline.js"></script>
+    <script src="{{ asset('/') }}plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="{{ asset('/') }}plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <script src="{{ asset('/') }}plugins/jquery-knob/jquery.knob.min.js"></script>
+    <script src="{{ asset('/') }}plugins/moment/moment.min.js"></script>
+    <script src="{{ asset('/') }}plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="{{ asset('/') }}plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="{{ asset('/') }}plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="{{ asset('/') }}plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="{{ asset('/') }}dist/js/adminlte.js"></script>
+    <script src="{{ asset('/') }}dist/js/pages/dashboard.js"></script>
+    <script src="{{ asset('/') }}dist/js/demo.js"></script>
+
+    <script src="{{ asset('/') }}plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    {{-- <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script> --}}
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            });
+            $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            });
         });
-        $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
+    </script>
+
+    <script>
+        $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
         });
-    });
-  </script>
+    </script>
+
+  <!-- jQuery -->
+  {{-- <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script> --}}
+  <!-- Bootstrap 4 -->
+  {{-- <script src="{{ asset('/') }}plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+  <!-- DataTables -->
+  <!-- AdminLTE App -->
+  <!-- AdminLTE for demo purposes -->
+  {{-- <script src="{{ asset('/') }}dist/js/demo.js"></script> --}}
+  <!-- page script -->
 
   @include('manager.layouts.password');
 </body>

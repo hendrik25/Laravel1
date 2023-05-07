@@ -34,54 +34,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Menampilkan Verifikasi Cuti Karyawan.
-     */
-    public function vertifikasi(){
-        return view('admin.layouts.vertifikasi', [
-            "title" => "Data Vertifikasi Cuti Karyawan"
-        ]);
-    }
-
-    /**
-     * Menampilkan Riwayat Verifikasi Cuti Karyawan.
-     */
-    public function riwayat(){
-        return view('admin.layouts.riwayatvertifikasi', [
-            "title" => "Data Riwayat Cuti Karyawan"
-        ]);
-    }
-
-    /**
-     * Menampilkan data karyawan.
-     */
-    public function datakaryawan(Admin $admins){
-        $admins  = DB::table('admins')
-                    ->whereIn('jabatan', ['Manager'])
-                    ->get();
-
-        // $admins = DB::select('SELECT * FROM admins WHERE jabatan IN ("Admin", "Manager")');
-        return view('admin.layouts.datakaryawan', [
-            "title" => "Data Karyawan", 'admins' => $admins,
-        ])->with('count', $admins);
-    }
-
-    /**
-     * Menampilkan Data Cuti Karyawan.
-     */
-    public function datacuti(){
-        // $data_cutis = DB::select('SELECT * FROM data_cutis RIGHT JOIN admins
-        //                 on admins.nik=data_cutis.nik WHERE admins.jabatan');
-        $data_cutis = DB::table('data_cutis')
-                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
-                    ->whereIn('admins.jabatan', ['Admin','Manager'])
-                    ->get();
-
-        return view('admin.layouts.datacutikaryawan', [
-            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
-        ]);
-    }
-
-    /**
      * Menampilkan Laporan Cuti Karyawan.
      */
     public function laporancuti(){
@@ -122,7 +74,10 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Password dan konfirmasi password tidak sama');
         } else if (empty($request->username) || empty($request->password)) {
             return redirect()->back()->with('error', 'Username dan password harus diisi');
-        } else {
+        } else if ($request->level == "-"){
+            return redirect()->back()->with('error', 'Mohon diisikan hak aksesnya...!');
+        }
+        else {
             // validasi input
             $request->validate([
                 'nik'       => 'required',
@@ -197,6 +152,31 @@ class AdminController extends Controller
      * Update User.
      */
     public function updateuser(Request $request){
+        $request->validate([
+            'password'  => 'required',
+            'password2' => 'required',
+            'password3' => 'required',
+          ]);
+
+        $user = Auth::user();
+        // Password lama tidak sesuai dengan yang ada di database
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->with('error', 'Password Lama Salah!');
+        }
+        // cek apakah password baru sesuai dengan password konfirmasi
+        else if ($request->password2 != $request->password3) {
+            return redirect()->back()->with('error', 'Password Baru Tidak Sesuai Dengan Konfirmasi Password!');
+        }
+        // cek apakah password lama sesuai dengan yang ada di database
+        else if (Hash::check($request->password, $user->password)) {
+            $user->password = Hash::make($request->password2);
+            $user->save();
+
+            // Simpan data dan redirect back
+            return redirect()->back()->with('success', 'Password Berhasil Di Ubah!');
+        }
+    }
+    public function updateuser2(Request $request){
         $request->validate([
             'password'  => 'required',
             'password2' => 'required',

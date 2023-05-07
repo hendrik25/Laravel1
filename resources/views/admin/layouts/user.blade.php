@@ -51,23 +51,23 @@
                                         <td>
                                             @if(empty($p->username) || empty($p->password))
                                                 <a href="#registModal{{ $p->nik }}" data-toggle="modal">
-                                                    <button type="submit" class="btn btn-primary" name="regist" value="Regist" data-toggle="tooltip" data-placement="bottom" title="Registrasi User" {{ ($p->username && $p->password) ? 'disabled' : '' }}>
+                                                    <button type="submit" class="btn btn-primary" name="regist" value="Regist" data-toggle="tooltip" data-placement="bottom" title="Registrasi User">
                                                         <i class="fas fa-registered"></i>
                                                     </button>
                                                 </a>
-                                                <a href="#editModal{{ $p->nik }}" >
-                                                    <button type="submit" class="btn btn-warning" name="edit" value="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit User" disabled>
+                                                <a href="" onclick="return false;" disabled>
+                                                    <button type="submit" class="btn btn-warning" name="edit" value="Edit" disabled data-toggle="tooltip" data-placement="bottom" title="Edit User">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 </a>
-                                                <a href="/admin/user-delete{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Delete User" onclick="return false;" disabled>
-                                                    <button type="submit" class="btn btn-danger" name="delete" value="Delete" disabled>
+                                                <a href="" onclick="return false;" disabled>
+                                                    <button type="submit" class="btn btn-danger" name="delete" value="Delete" disabled data-toggle="tooltip" data-placement="bottom" title="Delete User">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </a>
                                             @else
-                                                <a href="#registModal{{ $p->nik }}" {{ ($p->username && $p->password) ? 'disabled' : '' }}>
-                                                    <button type="submit" class="btn btn-primary" name="regist" value="Regist" data-toggle="tooltip" data-placement="bottom" title="Registrasi User" {{ ($p->username && $p->password) ? 'disabled' : '' }}>
+                                                <a href="" onclick="return false;" disabled>
+                                                    <button type="submit" class="btn btn-primary" name="regist" value="Regist" disabled data-toggle="tooltip" data-placement="bottom" title="Registrasi User">
                                                         <i class="fas fa-registered"></i>
                                                     </button>
                                                 </a>
@@ -82,10 +82,6 @@
                                                     </button>
                                                 </a>
                                             @endif
-
-
-
-
                                         </td>
                                     </tr>
                                 @endforeach

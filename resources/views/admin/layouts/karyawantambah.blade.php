@@ -18,7 +18,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                        <form method="POST" action="/admin/tambah">
+                        <form method="POST" action="/admin/tambahdata">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-sm-6">
@@ -198,7 +198,7 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger" name="batal" value="BATAL" onclick="window.location.href='/admin/datakaryawan'">
+                                                <button type="button" class="btn btn-danger" name="batal" value="BATAL" onclick="window.location.href='/admin/karyawandata'">
                                                 <i class="fas fa-ban"></i> CENCEL
                                             </button>
                                             </td>

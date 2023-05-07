@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Vertifikasi Pengajuan Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Data Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -26,7 +26,10 @@
                                     <th>Nama</th>
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
-                                    <th>Jumlah Cuti</th>
+                                    {{-- <th>Nama Cuti</th> --}}
+                                    <th>Periode</th>
+                                    <th>Hak Cuti</th>
+                                    <th>Sisa Cuti</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -34,16 +37,20 @@
                                 @php
                                     $no=1;
                                 @endphp
-                                @foreach ( $cutis as $p )
+                                @foreach ( $data_cutis as $p )
                                     <tr>
                                         <td scope="row">{{ $no++ }}</td>
                                         <td >{{ $p->nik }}</td>
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
-                                        <td >{{ $p->jumlah_cuti }}</td>
+                                        {{-- <td >{{ $p->nama_cuti }}</td> --}}
+                                        <td >{{ $p->periode }}</td>
+                                        <td >{{ $p->hak_cuti }}</td>
+                                        <td >{{ $p->sisa_cuti }}</td>
+
                                         <td>
-                                            <a href="/manager/vertifikasidetail2/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
+                                            <a href="/manager/cutidetail2/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Data Cuti">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </button>

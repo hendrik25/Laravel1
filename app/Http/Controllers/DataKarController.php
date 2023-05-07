@@ -14,10 +14,33 @@ use Illuminate\Support\Facades\Hash;
 class DataKarController extends Controller
 {
     /**
+     * Menampilkan data karyawan.
+     */
+    public function karyawandata(Admin $admins){
+        $admins  = DB::table('admins')
+                    ->whereIn('jabatan', ['Manager', 'Kepala Bagian', 'Operator'])
+                    ->get();
+
+        // $admins = DB::select('SELECT * FROM admins WHERE jabatan IN ("Admin", "Manager")');
+        return view('admin.layouts.karyawandata', [
+            "title" => "Data Karyawan", 'admins' => $admins,
+        ])->with('count', $admins);
+    }
+    public function karyawandata2(Admin $admins){
+        $admins  = DB::table('admins')
+                    ->whereIn('jabatan', ['Kepala Bagian', 'Operator'])
+                    ->get();
+
+        // $admins = DB::select('SELECT * FROM admins WHERE jabatan IN ("Admin", "Manager")');
+        return view('manager.layouts.karyawandata', [
+            "title" => "Data Karyawan", 'admins' => $admins,
+        ])->with('count', $admins);
+    }
+    /**
      * Menampilkan form tambah karyawan.
      */
-    public function tambahkaryawan(){
-        return view('admin.layouts.tambahkaryawan', [
+    public function karyawantambah(){
+        return view('admin.layouts.karyawantambah', [
             "title" => "Tambah Data Karyawan"
         ]);
     }
@@ -54,8 +77,7 @@ class DataKarController extends Controller
                 'bagian'        =>$request->bagian,
                 'tgl_masuk'     =>$request->tgl_masuk,
             ]);
-            return redirect('/admin/datakaryawan')->with('success', 'Berhasil Menambahkan Data Karyawan');
-            // return redirect('/admin/datakaryawan')->with('sukses', 'Berhasil menambahkan data karyawan');
+            return redirect('/admin/karyawandata')->with('success', 'Berhasil Menambahkan Data Karyawan');
     }
 
     /**
@@ -63,7 +85,7 @@ class DataKarController extends Controller
      */
     public function edit($nik){
         $admins = DB::table('admins')->where('nik',$nik)->get();
-        return view('admin.layouts.editkaryawan', [
+        return view('admin.layouts.karyawanedit', [
             "title" => "Edit Data Karyawan", 'admins' => $admins,
         ]);
     }
@@ -88,8 +110,7 @@ class DataKarController extends Controller
             'tgl_masuk'     =>$request->tgl_masuk,
         ]);
 
-        return redirect('/admin/datakaryawan')->with('success', 'Berhasil Merubah Data Karyawan');
-        // return redirect('/admin/datakaryawan')->with('warning', 'Berhasil merubah data karyawan');
+        return redirect('/admin/karyawandata')->with('success', 'Berhasil Merubah Data Karyawan');
     }
 
     /**
@@ -97,7 +118,13 @@ class DataKarController extends Controller
      */
     public function detail($nik){
         $admins = DB::table('admins')->where('nik',$nik)->get();
-        return view('admin.layouts.detailkaryawan', [
+        return view('admin.layouts.karyawandetail', [
+            "title" => "Detail Data Karyawan", 'admins' => $admins,
+        ]);
+    }
+    public function detail2($nik){
+        $admins = DB::table('admins')->where('nik',$nik)->get();
+        return view('manager.layouts.karyawandetail', [
             "title" => "Detail Data Karyawan", 'admins' => $admins,
         ]);
     }
@@ -109,7 +136,7 @@ class DataKarController extends Controller
         $admins = Admin::select('*')
             ->where('nik', $nik)
             ->delete();
-            return redirect('/admin/datakaryawan')->with('success', 'Berhasil Menghapus Data Karyawan');
+            return redirect('/admin/karyawandata')->with('success', 'Berhasil Menghapus Data Karyawan');
             // return redirect('/admin/datakaryawan')->with('gagal', 'Berhasil Menghapus data karyawan');
     }
 }

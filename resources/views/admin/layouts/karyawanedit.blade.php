@@ -20,7 +20,7 @@
                 {{-- <div class="card-body"> --}}
                 <div class="card-header">
                     @foreach ( $admins as $p )
-                        <form method="POST" action="/admin/update{nik}">
+                        <form method="POST" action="/admin/karyawanupdate{nik}">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-sm-6">
@@ -123,7 +123,7 @@
                                                 </button>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger" name="batal" value="BATAL" onclick="window.location.href='/admin/datakaryawan'">
+                                                <button type="button" class="btn btn-danger" name="batal" value="BATAL" onclick="window.location.href='/admin/karyawandata'">
                                                     <i class="fas fa-ban"></i> CENCEL
                                                 </button>
                                             </td>
