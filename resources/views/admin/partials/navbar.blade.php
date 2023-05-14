@@ -9,16 +9,25 @@
             <ul class="navbar-nav ml-auto">
 
                 <!-- Notifications Dropdown Menu -->
+                @php
+                        $cutis = DB::table('cutis')
+                        ->rightjoin('admins', 'admins.nik', '=', 'cutis.nik')
+                        ->where('cutis.vertifikasi_admin', 'Pending')
+                        ->where('cutis.approval_manager', 'Approved')
+                        ->where('cutis.approval_kabag', 'Approved')
+                        ->get();
+                        $approve = $cutis->count();
+                    @endphp
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="/">
                         <i class="far fa-bell"></i>
-                        <span class="badge badge-warning navbar-badge">15</span>
+                        <span class="badge badge-warning navbar-badge">{{ $approve }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
-                        <a href="/" class="dropdown-item">
-                            <i class="fas fa-users mr-2"></i> Registrasi Users
-                            <span class="float-right text-muted text-sm">12 hours</span>
+                        <a href="/admin/vertifikasi" class="dropdown-item">
+                            <i class="fas fa-edit mr-2"></i> Approval Cuti
+                            <span class="float-right text-muted text-sm">{{ $approve }}</span>
                         </a>
                     </div>
                 </li>

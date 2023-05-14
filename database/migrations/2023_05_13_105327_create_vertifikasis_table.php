@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('vertifikasis', function (Blueprint $table) {
             // $table->id();
-            $table->bigIncrements('id_user');
+            $table->bigIncrements('id_vertif');
+            $table->bigInteger('id')->unsigned();
+            $table->bigInteger('id_cuti')->unsigned();
             $table->bigInteger('nik');
-            $table->string('username', 30);
 
-            $table->string('password');
-            $table->string('level', 20);
-
-            $table->rememberToken();
             $table->timestamps();
-
-            // $table->foreign('nik')->references('nik')->on('admins')->onUpdate('cascade');
         });
     }
 
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('vertifikasis');
     }
 };

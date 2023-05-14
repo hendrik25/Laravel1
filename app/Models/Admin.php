@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -39,11 +40,11 @@ class Admin extends Model
     public function user(){
         return $this->hasOne('App\Models\User');
     }
-
     public function datacuti(){
-        return $this->hasOne('App\Models\DataCuti');
+        return $this->hasMany('App\Models\DataCuti');
     }
     public function cuti(){
-        return $this->hasOne('App\Models\Cuti');
+        return $this->hasMany('App\Models\Cuti');
     }
+
 }

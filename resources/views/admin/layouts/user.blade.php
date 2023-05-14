@@ -18,82 +18,86 @@
         <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nik</th>
-                                    <th>Nama</th>
-                                    <th>Bagian</th>
-                                    <th>Username</th>
-                                    <th>Password</th>
-                                    <th>Hak Akses</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $no=1;
-                                @endphp
-                                @foreach ( $users as $p )
+                        {{-- <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Tambah Data Karyawan" class="btn btn-success" name="tambah" value="TAMBAH" onclick="window.location.href='/admin/karyawantambah'">
+                            <i class="fa fa-users"></i>
+                        </button><br><br> --}}
+                        <div class="table-responsive">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
                                     <tr>
-                                        <td scope="row">{{ $no++ }}</td>
-                                        <td >{{ $p->nik }}</td>
-                                        <td >{{ $p->name }}</td>
-                                        <td >{{ $p->bagian }}</td>
-                                        <td >{{ $p->username }}</td>
-                                        <td >
-                                            @if (!empty($p->password))
-                                                {{ str_repeat('*', 6) }}
-                                            @endif
-                                        </td>
-                                        <td >{{ $p->level }}</td>
-                                        <td>
-                                            @if(empty($p->username) || empty($p->password))
-                                                <a href="#registModal{{ $p->nik }}" data-toggle="modal">
-                                                    <button type="submit" class="btn btn-primary" name="regist" value="Regist" data-toggle="tooltip" data-placement="bottom" title="Registrasi User">
-                                                        <i class="fas fa-registered"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="" onclick="return false;" disabled>
-                                                    <button type="submit" class="btn btn-warning" name="edit" value="Edit" disabled data-toggle="tooltip" data-placement="bottom" title="Edit User">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="" onclick="return false;" disabled>
-                                                    <button type="submit" class="btn btn-danger" name="delete" value="Delete" disabled data-toggle="tooltip" data-placement="bottom" title="Delete User">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </a>
-                                            @else
-                                                <a href="" onclick="return false;" disabled>
-                                                    <button type="submit" class="btn btn-primary" name="regist" value="Regist" disabled data-toggle="tooltip" data-placement="bottom" title="Registrasi User">
-                                                        <i class="fas fa-registered"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="#editModal{{ $p->nik }}" data-toggle="modal">
-                                                    <button type="submit" class="btn btn-warning" name="edit" value="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit User">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                                <a href="/admin/user-delete{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Delete User" onclick="return confirm('Anda yakin ingin menghapus data ini?');">
-                                                    <button type="submit" class="btn btn-danger" name="delete" value="Delete">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </a>
-                                            @endif
-                                        </td>
+                                        <th>No</th>
+                                        <th>Nik</th>
+                                        <th>Nama</th>
+                                        <th>Bagian</th>
+                                        <th>Jabatan</th>
+                                        <th>Username</th>
+                                        <th>Password</th>
+                                        <th>Hak Akses</th>
+                                        <th>Aksi</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $no=1;
+                                    @endphp
+                                    @foreach ( $users as $p )
+                                        <tr>
+                                            <td scope="row">{{ $no++ }}</td>
+                                            <td >{{ $p->nik }}</td>
+                                            <td >{{ $p->name }}</td>
+                                            <td >{{ $p->jabatan }}</td>
+                                            <td >{{ $p->bagian }}</td>
+                                            <td >{{ $p->username }}</td>
+                                            <td>{{ !empty($p->password) ? str_repeat('*', 6) : '-' }}</td>
+                                            <td >{{ $p->level }}</td>
+                                            <td>
+                                            @if(empty($p->username) || empty($p->password))
+                                                    <a href="#registModal{{ $p->nik }}" data-toggle="modal">
+                                                        <button type="submit" class="btn btn-primary" name="regist" value="Regist" {{ !empty($p->username) && !empty($p->password) ? 'disabled' : '' }} data-toggle="tooltip" data-placement="bottom" title="Registrasi User">
+                                                            <i class="fas fa-registered"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="" onclick="return false;" {{ empty($p->username) && empty($p->password) ? 'disabled' : '' }}>
+                                                        <button type="submit" class="btn btn-warning" name="edit" value="Edit" disabled data-toggle="tooltip" data-placement="bottom" title="Edit User">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="" onclick="return false;" {{ empty($p->username) && empty($p->password) ? 'disabled' : '' }}>
+                                                        <button type="submit" class="btn btn-danger" name="delete" value="Delete" disabled data-toggle="tooltip" data-placement="bottom" title="Delete User">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </a>
+                                                @elseif(!empty($p->username) && !empty($p->password))
+                                                    <a href="" onclick="return false;" {{ !empty($p->username) && !empty($p->password) ? 'disabled' : '' }}>
+                                                        <button type="submit" class="btn btn-primary" name="regist" value="Regist" disabled data-toggle="tooltip" data-placement="bottom" title="Registrasi User">
+                                                            <i class="fas fa-registered"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="#editModal{{ $p->nik }}" data-toggle="modal">
+                                                        <button type="submit" class="btn btn-warning" name="edit" value="Edit" {{ empty($p->username) || empty($p->password) ? 'disabled' : '' }} data-toggle="tooltip" data-placement="bottom" title="Edit User">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a href="/admin/user-delete{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Delete User" {{ empty($p->username) || empty($p->password) ? 'disabled' : '' }} onclick="event.preventDefault(); confirmDelete(this.href);">
+                                                        <button type="submit" class="btn btn-danger" name="delete" value="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </a>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
         </div>
     </section>
     <!-- /.main content -->
 
-    {{-- Modal Regist--}}
+{{-- Modal Regist--}}
 @foreach ( $users as $p )
 <div class="modal fade" id="registModal{{ $p->nik }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

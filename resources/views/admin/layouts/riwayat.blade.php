@@ -26,11 +26,12 @@
                                     <th>Nama</th>
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
-                                    <th>Nama Cuti</th>
+                                    {{-- <th>Nama Cuti</th> --}}
                                     <th>Jumlah Cuti</th>
                                     <th>Awal Cuti</th>
                                     <th>Akhir Cuti</th>
                                     <th>Keterangan</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -45,13 +46,24 @@
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
-                                        <td >{{ $p->nama_cuti }}</td>
+                                        {{-- <td >{{ $p->nama_cuti }}</td> --}}
                                         <td >{{ $p->jumlah_cuti }}</td>
                                         <td >{{ $p->tgl_awal }}</td>
                                         <td >{{ $p->tgl_akhir }}</td>
                                         <td >{{ $p->keterangan }}</td>
+                                        <td >
+                                            @if($p->approval_kabag == 'Approved' && $p->approval_manager == 'Approved' && $p->vertifikasi_admin == 'Approved')
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-success"><i class="fas fa-check"></i></span>
+                                            @elseif($p->approval_kabag == 'Approved' && $p->approval_manager == 'Approved' && $p->vertifikasi_admin == 'Rejected')
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-danger"><i class="fas fa-times"></i></span>
+                                            @endif
+                                        </td>
                                         <td>
-                                            <a href="/admin/riwayatdetail/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Data Cuti">
+                                            <a href="/admin/riwayatdetail/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Detail Data Cuti">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
@@ -67,4 +79,3 @@
     </section>
     <!-- /.main content -->
 @endsection
-

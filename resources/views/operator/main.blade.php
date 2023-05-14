@@ -35,13 +35,13 @@
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-primary navbar-dark">
-            @include('admin.partials.navbar')
+            @include('operator.partials.navbar')
         </nav>
         <!-- end navbar -->
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            @include('admin.partials.sidebar')
+            @include('operator.partials.sidebar')
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
@@ -78,8 +78,6 @@
             });
         </script>
     @endif
-
-
 
     <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
     <script src="{{ asset('/') }}plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -176,6 +174,6 @@
   {{-- <script src="{{ asset('/') }}dist/js/demo.js"></script> --}}
   <!-- page script -->
 
-  @include('admin.layouts.password');
+  @include('operator.layouts.password');
 </body>
 </html>

@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('operator.main')
 
 @section('container')
     <!-- Content Header (Page header) -->
@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Detail Data Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Detail Riwayat Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -37,22 +37,31 @@
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">JABATAN</label></td>
-                                            <td><input type="text" name="jabatan" class="form-control" value="{{ $p->jabatan }}" readonly>
+                                            <td>
+                                                <input type="text" name="jabatan" class="form-control" value="{{ $p->jabatan }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">BAGIAN</label></td>
-                                            <td><input type="text" name="bagian" class="form-control" value="{{ $p->bagian }}" readonly>
+                                            <td>
+                                                <input type="text" name="bagian" class="form-control" value="{{ $p->bagian }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">TANGGAL PENGAJUAN</label></td>
+                                            <td><input type="date" name="tgl_pengajuan" class="form-control" value="{{ $p->tgl_pengajuan }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">NAMA CUTI</label></td>
+                                            <td>
+                                                <input type="text" name="nama_cuti" class="form-control" value="{{ $p->nama_cuti }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">JUMLAH CUTI</label></td>
-                                            <td><input type="text" name="jumlah_cuti" class="form-control" value="{{ $p->jumlah_cuti }}" readonly>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label class="col-form-label">PENGAJUAN</label></td>
-                                            <td><input type="date" name="tgl_pengajuan" class="form-control" value="{{ $p->tgl_pengajuan }}" readonly>
+                                            <td>
+                                                <input type="text" name="jumlah_cuti" class="form-control" value="{{ $p->jumlah_cuti }}" readonly>
                                             </td>
                                         </tr>
                                     </table>
@@ -60,35 +69,33 @@
                                 <div class="col-sm-6">
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
-                                            <td><label class="col-form-label">AWAL CUTI</label></td>
+                                            <td><label class="col-form-label">TANGGAL AWAL CUTI</label></td>
                                             <td width="350px"><input type="date" name="tgl_awal" class="form-control" value="{{ $p->tgl_awal }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label class="col-form-label">AKHIR CUTI</label></td>
-                                            <td><input type="date" name="tgl_akhir" class="form-control" value="{{ $p->tgl_akhir }}" readonly>
+                                            <td><label class="col-form-label">TANGGAL AKHIR CUTI</label></td>
+                                            <td width="350px"><input type="date" name="tgl_akhir" class="form-control" value="{{ $p->tgl_akhir }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">KETERANGAN</label></td>
-                                            <td><textarea name="keterangan" class="form-control" value="{{ $p->keterangan }}" readonly rows="3">{{ $p->keterangan }}</textarea>
+                                            <td><textarea name="keterangan" class="form-control" rows="3" value="{{ $p->keterangan }}" readonly>{{ $p->keterangan }}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label class="col-form-label">APP. KABAG</label></td>
+                                            <td><label class="col-form-label">APP KABAG</label></td>
                                             <td><input type="text" name="approval_kabag" class="form-control" value="{{ $p->approval_kabag }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label class="col-form-label">APP. MANAGER</label></td>
-                                            <td>
-                                                <input type="text" name="approval_manager" class="form-control" value="{{ $p->approval_manager }}" readonly>
+                                            <td><label class="col-form-label">APP MANAGER</label></td>
+                                            <td><input type="text" name="approval_manager" class="form-control" value="{{ $p->approval_manager }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">VERTIFIKASI ADMIN</label></td>
-                                            <td>
-                                                <input type="text" name="vertifikasi_admin" class="form-control" value="{{ $p->vertifikasi_admin }}" readonly>
+                                            <td><input type="text" name="vertifikasi_admin" class="form-control" value="{{ $p->vertifikasi_admin }}" readonly>
                                             </td>
                                         </tr>
                                     </table>
@@ -97,13 +104,14 @@
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
                                             <td>
-                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="window.location.href='/admin/vertifikasi'">
-                                                    <i class="fas fa-ban"></i> BACK
-                                                </button>
+                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="window.location.href='/operator/riwayat'">
+                                                <i class="fas fa-ban"></i> BACK
+                                            </button>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
+
                             </div>
                         </form>
                         @endforeach

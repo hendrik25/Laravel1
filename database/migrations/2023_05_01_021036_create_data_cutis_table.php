@@ -15,7 +15,7 @@ return new class extends Migration
             // $table->id();
 
             $table->bigIncrements('id_cuti');
-            $table->bigInteger('nik')->unique();
+            $table->bigInteger('nik');
             $table->string('nama_cuti', 20);
             $table->string('periode', 10);
             $table->integer('hak_cuti');

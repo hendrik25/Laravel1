@@ -27,6 +27,8 @@
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
                                     <th>Jumlah Cuti</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -42,10 +44,28 @@
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
                                         <td >{{ $p->jumlah_cuti }}</td>
+                                        <td >{{ $p->keterangan }}</td>
+                                        <td >
+                                            @if($p->approval_kabag == 'Approved' && $p->approval_manager == 'Approved' && $p->vertifikasi_admin == 'Pending')
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-warning"><i class="fas fa-clock"></i></span>
+                                            @endif
+                                        </td>
                                         <td>
-                                            <a href="/admin/vertifikasidetail/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
+                                            <a href="/admin/vertifikasidetail/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
+                                                </button>
+                                            </a>
+                                            <a href="/admin/approved/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Approved">
+                                                <button type="submit" class="btn btn-success" name="approved" value="Approved">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </a>
+                                            <a href="/admin/rejected/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Rejected">
+                                                <button type="submit" class="btn btn-danger" name="rejected" value="Rejected">
+                                                    <i class="fas fa-times"></i>
                                                 </button>
                                             </a>
                                         </td>

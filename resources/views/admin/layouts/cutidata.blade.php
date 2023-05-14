@@ -29,6 +29,7 @@
                                     <th>Tanggal Masuk</th>
                                     <th>Periode</th>
                                     <th>Hak Cuti</th>
+                                    <th>Cuti Diambil</th>
                                     <th>Sisa Cuti</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -47,6 +48,7 @@
                                         <td >@php echo date('d-m-Y', strtotime( $p->tgl_masuk )) @endphp </td>
                                         <td >{{ $p->periode }}</td>
                                         <td >{{ $p->hak_cuti }}</td>
+                                        <td >{{ $p->cuti_diambil }}</td>
                                         <td >{{ $p->sisa_cuti }}</td>
 
                                         <td>

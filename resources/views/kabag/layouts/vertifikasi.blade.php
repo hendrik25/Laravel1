@@ -1,4 +1,4 @@
-@extends('manager.main')
+@extends('kabag.main')
 
 @section('container')
     <!-- Content Header (Page header) -->
@@ -46,24 +46,24 @@
                                         <td >{{ $p->jumlah_cuti }}</td>
                                         <td >{{ $p->keterangan }}</td>
                                         <td >
-                                            @if($p->approval_kabag == 'Approved' && $p->approval_manager == 'Pending' && $p->vertifikasi_admin == 'Pending')
-                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                            @if($p->approval_kabag == 'Pending' && $p->approval_manager == 'Pending' && $p->vertifikasi_admin == 'Pending')
+                                                <span class="text-warning"><i class="fas fa-clock"></i></span> |
                                                 <span class="text-warning"><i class="fas fa-clock"></i></span> |
                                                 <span class="text-warning"><i class="fas fa-clock"></i></span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="/manager/vertifikasidetail2/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
+                                            <a href="/kabag/vertifikasidetail3/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                             </a>
-                                            <a href="/manager/approved/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Approved">
+                                            <a href="/kabag/approved/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Approved">
                                                 <button type="submit" class="btn btn-success" name="approved" value="Approved">
                                                     <i class="fas fa-check"></i>
                                                 </button>
                                             </a>
-                                            <a href="/manager/rejected/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Rejected">
+                                            <a href="/kabag/rejected/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Rejected">
                                                 <button type="submit" class="btn btn-danger" name="rejected" value="Rejected">
                                                     <i class="fas fa-times"></i>
                                                 </button>

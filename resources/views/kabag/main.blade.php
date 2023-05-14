@@ -35,13 +35,13 @@
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-primary navbar-dark">
-            @include('admin.partials.navbar')
+            @include('kabag.partials.navbar')
         </nav>
         <!-- end navbar -->
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            @include('admin.partials.sidebar')
+            @include('kabag.partials.sidebar')
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
@@ -78,8 +78,6 @@
             });
         </script>
     @endif
-
-
 
     <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script>
     <script src="{{ asset('/') }}plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -129,42 +127,43 @@
         $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
-    <script>
-        function confirmEdit(url) {
-            Swal.fire({
-                title: 'Apakah Anda Ingin Merubah Data?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        }
-    </script>
-    <script>
-        function confirmDelete(url) {
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Data yang dihapus tidak bisa dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Hapus data!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-        }
-    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+<script>
+    function confirmEdit(url) {
+        Swal.fire({
+            title: 'Apakah Anda Ingin Merubah Data?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+</script>
+<script>
+    function confirmDelete(url) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus data!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+</script>
 
   <!-- jQuery -->
   {{-- <script src="{{ asset('/') }}plugins/jquery/jquery.min.js"></script> --}}
@@ -176,6 +175,6 @@
   {{-- <script src="{{ asset('/') }}dist/js/demo.js"></script> --}}
   <!-- page script -->
 
-  @include('admin.layouts.password');
+  @include('kabag.layouts.password');
 </body>
 </html>

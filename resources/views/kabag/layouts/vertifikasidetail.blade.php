@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('kabag.main')
 
 @section('container')
     <!-- Content Header (Page header) -->
@@ -97,7 +97,7 @@
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
                                             <td>
-                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="window.location.href='/admin/vertifikasi'">
+                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="window.location.href='/kabag/vertifikasi'">
                                                     <i class="fas fa-ban"></i> BACK
                                                 </button>
                                             </td>

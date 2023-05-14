@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cuti extends Model
 {
@@ -29,6 +30,9 @@ class Cuti extends Model
     ];
 
     public function admin(){
-        return $this->hasOne(Admin::class, 'nik', 'nik');
+        return $this->belongsTo(Admin::class, 'nik', 'nik');
+    }
+    public function vertifikasi(){
+        return $this->hasMany('App\Models\Vertifikasi', 'id_vertif');
     }
 }

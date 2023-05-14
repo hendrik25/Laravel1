@@ -12,8 +12,9 @@
                     @php
                         $cutis = DB::table('cutis')
                         ->rightjoin('admins', 'admins.nik', '=', 'cutis.nik')
-                        ->where('cutis.approval_manager', 'Pending')
-                        ->where('cutis.approval_kabag', 'Approved')
+                        ->whereIn('cutis.vertifikasi_admin', ['Approved', 'Rejected'])
+                        ->whereIn('cutis.approval_manager', ['Approved', 'Rejected'])
+                        ->whereIn('cutis.approval_kabag', ['Approved', 'Rejected'])
                         ->get();
                         $approve = $cutis->count();
                     @endphp
@@ -24,7 +25,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
-                        <a href="/manager/vertifikasi" class="dropdown-item">
+                        <a href="/operator/riwayat" class="dropdown-item">
                             <i class="fas fa-edit mr-2"></i> Approval Cuti
                             <span class="float-right text-muted text-sm">{{ $approve }}</span>
                         </a>

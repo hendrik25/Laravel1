@@ -47,12 +47,12 @@
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">JUMLAH CUTI</label></td>
-                                            <td><input type="text" name="jumlah_cuti" class="form-control" readonly>
+                                            <td><input type="text" name="jumlah_cuti" class="form-control" value="{{ $p->jumlah_cuti }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">PENGAJUAN</label></td>
-                                            <td><input type="date" name="tgl_pengajuan" class="form-control" readonly>
+                                            <td><input type="date" name="tgl_pengajuan" class="form-control" value="{{ $p->tgl_pengajuan }}" readonly>
                                             </td>
                                         </tr>
                                     </table>
@@ -61,34 +61,34 @@
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
                                             <td><label class="col-form-label">AWAL CUTI</label></td>
-                                            <td><input type="date" name="tgl_awal" class="form-control" readonly>
+                                            <td width="350px"><input type="date" name="tgl_awal" class="form-control" value="{{ $p->tgl_awal }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">AKHIR CUTI</label></td>
-                                            <td><input type="date" name="tgl_akhir" class="form-control" readonly>
+                                            <td><input type="date" name="tgl_akhir" class="form-control" value="{{ $p->tgl_akhir }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">KETERANGAN</label></td>
-                                            <td width="350px"><input type="text" name="keterangan" class="form-control" readonly>
+                                            <td><textarea name="keterangan" class="form-control" value="{{ $p->keterangan }}" readonly rows="3">{{ $p->keterangan }}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">APP. KABAG</label></td>
-                                            <td><input type="text" name="approval_kabag" class="form-control" readonly>
+                                            <td><input type="text" name="approval_kabag" class="form-control" value="{{ $p->approval_kabag }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">APP. MANAGER</label></td>
                                             <td>
-                                                <input type="text" name="approval_manager" class="form-control" readonly>
+                                                <input type="text" name="approval_manager" class="form-control" value="{{ $p->approval_manager }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><label class="col-form-label">VERTIFIKASI ADMIN</label></td>
                                             <td>
-                                                <input type="text" name="vertifikasi_admin" class="form-control" readonly>
+                                                <input type="text" name="vertifikasi_admin" class="form-control" value="{{ $p->vertifikasi_admin }}" readonly>
                                             </td>
                                         </tr>
                                     </table>

@@ -6,23 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
 
-class ManagerController extends Controller
+class KabagController extends Controller
 {
-    /**
+   /**
      * Dashboard.
      */
     public function index(){
-        return view('manager.index', [
+        return view('kabag.index', [
             "title" => "Dashboard",
-        ]);
-    }
-
-    /**
-     * Menampilkan Laporan Cuti Karyawan.
-     */
-    public function laporancuti(){
-        return view('manager.layouts.laporancuti', [
-            "title" => "Data Laporan Cuti Karyawan"
         ]);
     }
 
@@ -30,7 +21,7 @@ class ManagerController extends Controller
      * Profil Karyawan.
      */
     public function profil(){
-        return view('manager.layouts.profil', [
+        return view('kabag.layouts.profil', [
             "title" => "Profil Karyawan"
         ]);
     }
@@ -38,7 +29,7 @@ class ManagerController extends Controller
     /**
      * Update Password User.
      */
-    public function updateuser2(Request $request){
+    public function updateuser3(Request $request){
         $request->validate([
             'password'  => 'required',
             'password2' => 'required',
@@ -64,3 +55,4 @@ class ManagerController extends Controller
         }
     }
 }
+

@@ -1,4 +1,4 @@
-@extends('admin.main')
+@extends('kabag.main')
 
 @section('container')
     <!-- Content Header (Page header) -->
@@ -18,9 +18,6 @@
         <div class="container-fluid">
                 <div class="card">
                     <div class="card-body">
-                        <button type="submit" data-toggle="tooltip" data-placement="bottom" title="Tambah Data Karyawan" class="btn btn-success" name="tambah" value="TAMBAH" onclick="window.location.href='/admin/karyawantambah'">
-                            <i class="fa fa-users"></i>
-                        </button><br><br>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -28,12 +25,12 @@
                                     {{-- <th>ID</th> --}}
                                     <th>Nik</th>
                                     <th>Nama</th>
-                                    {{-- <th>Tempat Lahir</th> --}}
+                                    <th>Tempat Lahir</th>
+                                    <th>Tanggal Lahir</th>
                                     {{-- <th>Jenis Kelamin</th> --}}
                                     {{-- <th>Email</th> --}}
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
-                                    <th>Tanggal Masuk</th>
                                     <th>No HP</th>
                                     {{-- <th>Agama</th> --}}
                                     {{-- <th>Tanggal Masuk</th> --}}
@@ -50,33 +47,17 @@
                                         <td scope="row">{{ $no++ }}</td>
                                         <td >{{ $p->nik }}</td>
                                         <td >{{ $p->name }}</td>
-                                        {{-- <td >{{ $p->tempat_lahir }}</td> --}}
+                                        <td >{{ $p->tempat_lahir }}</td>
+                                        <td >@php echo date('d-m-Y', strtotime( $p->tgl_lahir )) @endphp </td>
+                                        {{-- <td >{{ $p->jenis_kelamin }}</td> --}}
                                         {{-- <td >{{ $p->email }}</td> --}}
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
-                                        <td >@php echo date('d-m-Y', strtotime( $p->tgl_masuk )) @endphp </td>
                                         <td >{{ $p->no_hp }}</td>
-
                                         <td>
-                                            <a href="/admin/karyawandetail/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                            <a href="/kabag/karyawandetail/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="DETAIL">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
-                                            </a>
-                                            <a href="/admin/karyawanedit/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Edit" onclick="event.preventDefault(); confirmEdit(this.href);">
-                                                <button type="submit" class="btn btn-primary" name="edit" value="EDIT">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </a>
-
-                                            {{-- <a href="/admin/karyawandelete/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Hapus" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data...?')">
-                                                <button type="button" class="btn btn-danger" name="delete" value="DELETE">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </a> --}}
-                                            <a href="/admin/karyawandelete/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Hapus" onclick="event.preventDefault(); confirmDelete(this.href);">
-                                                <button type="button" class="btn btn-danger" name="delete" value="DELETE">
-                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </a>
                                         </td>

@@ -13,35 +13,19 @@ use Illuminate\Support\Facades\Hash;
 
 class DataCutiController extends Controller
 {
-    /**
-     * Menampilkan Data Cuti Karyawan.
-     */
+    // ADMIN
+    // Menampilkan Data Cuti Karyawan.
     public function cutidata(){
-        // $data_cutis = DB::select('SELECT * FROM data_cutis RIGHT JOIN admins
-        //                 on admins.nik=data_cutis.nik WHERE admins.jabatan');
         $data_cutis = DB::table('data_cutis')
                     ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
-                    ->whereIn('admins.jabatan', ['Manager', 'Kepala Bagian', 'Operator'])
+                    ->whereIn('admins.jabatan', ['Operator'])
                     ->get();
 
         return view('admin.layouts.cutidata', [
             "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
         ]);
     }
-    public function cutidata2(){
-        $data_cutis = DB::table('data_cutis')
-                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
-                    ->whereIn('admins.jabatan', ['Kepala Bagian', 'Operator'])
-                    ->get();
-
-        return view('manager.layouts.cutidata', [
-            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
-        ]);
-    }
-
-    /**
-     * Detail Cuti Karyawan.
-     */
+    // Detail Cuti Karyawan.
     public function cutidetail($nik){
         // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
         $data_cutis = DB::table('data_cutis')
@@ -52,20 +36,7 @@ class DataCutiController extends Controller
             "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
         ]);
     }
-    public function cutidetail2($nik){
-        // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
-        $data_cutis = DB::table('data_cutis')
-                    ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
-                    ->where('admins.nik', $nik)
-                    ->get();
-        return view('manager.layouts.cutidetail', [
-            "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
-        ]);
-    }
-
-    /**
-     * Tambah Cuti Karyawan.
-     */
+    // Tambah Cuti Karyawan
     public function cutitambah(Request $request, $nik) {
         // $admins     = DB::table('admins')->where('nik',$nik)->first()->tgl_masuk;
         // $now        = Carbon::now(); // Tanggal sekarang
@@ -130,10 +101,7 @@ class DataCutiController extends Controller
         }
 
     }
-
-    /**
-     * Update Cuti Karyawan.
-     */
+    // Update Cuti Karyawan.
     public function cutiupdate(Request $request, $nik){
         $now = Carbon::now()->year; // Tahun sekarang
         $data_cutis = DB::table('data_cutis')
@@ -175,4 +143,78 @@ class DataCutiController extends Controller
             }
         }
     }
+
+    // MANAGER
+    // data cuti
+    public function cutidata2(){
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
+                    ->whereIn('admins.jabatan', ['Operator'])
+                    ->get();
+
+        return view('manager.layouts.cutidata', [
+            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+    // detail data cuti
+    public function cutidetail2($nik){
+        // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('manager.layouts.cutidetail', [
+            "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+
+    // KABAG
+    // data cuti
+    public function cutidata3(){
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
+                    ->whereIn('admins.jabatan', ['Operator'])
+                    ->get();
+
+        return view('kabag.layouts.cutidata', [
+            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+    // detail data cuti
+    public function cutidetail3($nik){
+        // $admins = DB::select('SELECT * FROM admins RIGHT JOIN data_cutis on admins.nik=data_cutis.nik WHERE admins.nik');
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('kabag.layouts.cutidetail', [
+            "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+
+    //OPERATOR
+    // data cuti
+    public function cutidata4(){
+        $nik = auth()->user()->nik;
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'admins.nik', '=', 'data_cutis.nik')
+                    ->where('data_cutis.nik', $nik)
+                    ->get();
+
+        return view('operator.layouts.cutidata', [
+            "title" => "Data Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+    // detail data cuti
+    public function cutidetail4($nik){
+        $data_cutis = DB::table('data_cutis')
+                    ->rightjoin('admins', 'data_cutis.nik', '=', 'admins.nik')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('operator.layouts.cutidetail', [
+            "title" => "Detail Cuti Karyawan", 'data_cutis' => $data_cutis,
+        ]);
+    }
+
+
 }

@@ -1,4 +1,4 @@
-@extends('manager.main')
+@extends('kabag.main')
 
 @section('container')
     <!-- Content Header (Page header) -->
@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Vertifikasi Pengajuan Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Data Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -26,9 +26,10 @@
                                     <th>Nama</th>
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
-                                    <th>Jumlah Cuti</th>
-                                    <th>Keterangan</th>
-                                    <th>Status</th>
+                                    {{-- <th>Nama Cuti</th> --}}
+                                    <th>Periode</th>
+                                    <th>Hak Cuti</th>
+                                    <th>Sisa Cuti</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -36,36 +37,22 @@
                                 @php
                                     $no=1;
                                 @endphp
-                                @foreach ( $cutis as $p )
+                                @foreach ( $data_cutis as $p )
                                     <tr>
                                         <td scope="row">{{ $no++ }}</td>
                                         <td >{{ $p->nik }}</td>
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
-                                        <td >{{ $p->jumlah_cuti }}</td>
-                                        <td >{{ $p->keterangan }}</td>
-                                        <td >
-                                            @if($p->approval_kabag == 'Approved' && $p->approval_manager == 'Pending' && $p->vertifikasi_admin == 'Pending')
-                                                <span class="text-success"><i class="fas fa-check"></i></span> |
-                                                <span class="text-warning"><i class="fas fa-clock"></i></span> |
-                                                <span class="text-warning"><i class="fas fa-clock"></i></span>
-                                            @endif
-                                        </td>
+                                        {{-- <td >{{ $p->nama_cuti }}</td> --}}
+                                        <td >{{ $p->periode }}</td>
+                                        <td >{{ $p->hak_cuti }}</td>
+                                        <td >{{ $p->sisa_cuti }}</td>
+
                                         <td>
-                                            <a href="/manager/vertifikasidetail2/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Detail Vertifikasi">
+                                            <a href="/kabag/cutidetail3/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Detail Data Cuti">
                                                 <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
-                                            </a>
-                                            <a href="/manager/approved/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Approved">
-                                                <button type="submit" class="btn btn-success" name="approved" value="Approved">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </a>
-                                            <a href="/manager/rejected/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Rejected">
-                                                <button type="submit" class="btn btn-danger" name="rejected" value="Rejected">
-                                                    <i class="fas fa-times"></i>
                                                 </button>
                                             </a>
                                         </td>

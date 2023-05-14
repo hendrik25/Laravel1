@@ -36,6 +36,16 @@ class DataKarController extends Controller
             "title" => "Data Karyawan", 'admins' => $admins,
         ])->with('count', $admins);
     }
+    public function karyawandata3(Admin $admins){
+        $admins  = DB::table('admins')
+                    ->whereIn('jabatan', ['Operator'])
+                    ->get();
+
+        // $admins = DB::select('SELECT * FROM admins WHERE jabatan IN ("Admin", "Manager")');
+        return view('kabag.layouts.karyawandata', [
+            "title" => "Data Karyawan", 'admins' => $admins,
+        ])->with('count', $admins);
+    }
     /**
      * Menampilkan form tambah karyawan.
      */
@@ -125,6 +135,12 @@ class DataKarController extends Controller
     public function detail2($nik){
         $admins = DB::table('admins')->where('nik',$nik)->get();
         return view('manager.layouts.karyawandetail', [
+            "title" => "Detail Data Karyawan", 'admins' => $admins,
+        ]);
+    }
+    public function detail3($nik){
+        $admins = DB::table('admins')->where('nik',$nik)->get();
+        return view('kabag.layouts.karyawandetail', [
             "title" => "Detail Data Karyawan", 'admins' => $admins,
         ]);
     }

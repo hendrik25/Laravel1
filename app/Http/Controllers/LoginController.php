@@ -17,6 +17,14 @@ class LoginController extends Controller
             else if($user->level == 'Manager'){
                     return redirect()->intended('manager');
             }
+            else if($user->level == 'Kepala Bagian'){
+                return redirect()->intended('kabag');
+
+            }
+            else if($user->level == 'Operator'){
+                return redirect()->intended('operator');
+
+            }
         }
         return view('login.index');
     }
@@ -70,6 +78,12 @@ class LoginController extends Controller
                 return redirect()->intended('admin');
             } else if(Auth::user()->level == 'Manager'){
                 return redirect()->intended('manager');
+            }
+            else if(Auth::user()->level == 'Kepala Bagian'){
+                return redirect()->intended('kabag');
+            }
+            else if(Auth::user()->level == 'Operator'){
+                return redirect()->intended('operator');
             }
         } else {
             return redirect()->back()->withErrors([
