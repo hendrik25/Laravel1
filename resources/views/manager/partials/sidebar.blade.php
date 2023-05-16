@@ -16,25 +16,33 @@
                                 </a>
                             </li>
                             <li class="nav-item has-treeview">
+                                <a href="/manager/vertifikasi" class="nav-link">
+                                    <i class="far fa-edit nav-icon"></i>
+                                    <p>Vertifikasi Cuti</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item has-treeview">
                                 <a class="nav-link">
                                     <i class="nav-icon fas fa-bell"></i>
-                                    <p>Vertifikasi<i class="fas fa-angle-left right"></i></p>
+                                    <p>Riwayat Vertifikasi<i class="fas fa-angle-left right"></i></p>
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="/manager/vertifikasi" class="nav-link">
-                                            <i class="far fa-edit nav-icon"></i>
-                                            <p>Vertifikasi Cuti</p>
+                                        <a href="/manager/riwayatapproved" class="nav-link">
+                                            <i class="nav-icon fas fa-check"></i>
+                                            <p>Approved</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="/manager/riwayat2" class="nav-link">
-                                            <i class="far fa-list-alt nav-icon"></i>
-                                            <p>Riwayat Vertifikasi</p>
+                                        <a href="/manager/riwayatrejected" class="nav-link">
+                                            <i class="nav-icon fas fa-times"></i>
+                                            <p>Rejected</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+
                             <li class="nav-item has-treeview">
                                 <a href="/manager/karyawandata" class="nav-link">
                                     <i class="nav-icon fas fa-file"></i>

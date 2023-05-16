@@ -36,7 +36,7 @@
                         <div class="icon">
                             <i class="fas fa-list"></i>
                         </div>
-                        <a href="/operator/riwayat" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="/operator/riwayatpending" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 {{-- lihat data cuti --}}

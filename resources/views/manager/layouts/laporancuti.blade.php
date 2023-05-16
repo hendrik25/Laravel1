@@ -16,20 +16,52 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-
-            <!-- Main row -->
-            <div class="row">
-                <!-- Left col -->
-                <section class="col-lg-6 connectedSortable">
-                    <!-- Visi -->
-                </section>
-
-                <!-- right col-->
-                <section class="col-lg-6 connectedSortable">
-                    <!-- Misi card -->
-                </section>
-            </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nik</th>
+                                    <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>Bagian</th>
+                                    <th>No HP</th>
+                                    <th>Hak Cuti</th>
+                                    <th>Cuti Diambil</th>
+                                    <th>Sisa Cuti</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $no=1;
+                                @endphp
+                                {{-- @foreach($pegawais as $p) --}}
+                                @foreach ( $vertifikasis as $p )
+                                    <tr>
+                                        <td scope="row">{{ $no++ }}</td>
+                                        <td >{{ $p->nik }}</td>
+                                        <td >{{ $p->name }}</td>
+                                        <td >{{ $p->jabatan }}</td>
+                                        <td >{{ $p->bagian }}</td>
+                                        <td >{{ $p->no_hp }}</td>
+                                        <td >{{ $p->hak_cuti }}</td>
+                                        <td >{{ $p->cuti_diambil }}</td>
+                                        <td >{{ $p->sisa_cuti }}</td>
+                                        <td>
+                                            <a href="/manager/laporandetail/{{ $p->id_vertif }}" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                                <button type="submit" class="btn btn-warning" name="detail" value="DETAIL">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
     </section>
     <!-- /.main content -->

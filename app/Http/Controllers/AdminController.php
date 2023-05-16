@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\DataCuti;
+use App\Models\Vertifikasi;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +38,34 @@ class AdminController extends Controller
      * Menampilkan Laporan Cuti Karyawan.
      */
     public function laporancuti(){
+        $vertifikasis= DB::select('SELECT * FROM vertifikasis RIGHT JOIN admins ON admins.nik=vertifikasis.nik
+							RIGHT JOIN cutis ON cutis.id=vertifikasis.id
+                            RIGHT JOIN data_cutis ON data_cutis.id_cuti=vertifikasis.id_cuti
+                            WHERE vertifikasis.nik=admins.nik;');
         return view('admin.layouts.laporancuti', [
-            "title" => "Data Laporan Cuti Karyawan"
+            "title" => "Data Laporan Cuti Karyawan", 'vertifikasis' => $vertifikasis,
+        ]);
+    }
+    public function laporandetail(){
+        $vertifikasis= DB::select('SELECT * FROM vertifikasis RIGHT JOIN admins ON admins.nik=vertifikasis.nik
+							RIGHT JOIN cutis ON cutis.id=vertifikasis.id
+                            RIGHT JOIN data_cutis ON data_cutis.id_cuti=vertifikasis.id_cuti
+                            WHERE vertifikasis.nik=admins.nik');
+        return view('admin.layouts.laporandetail', [
+            "title" => "Data Laporan Cuti Karyawan", 'vertifikasis' => $vertifikasis,
+        ]);
+    }
+    public function laporanprint($id_vertif){
+        $vertifikasis = DB::table('vertifikasis')
+                        ->rightjoin('admins', 'admins.nik', '=', 'vertifikasis.nik')
+                        ->rightjoin('cutis', 'cutis.id' ,'=', 'vertifikasis.id')
+                        ->rightjoin('data_cutis', 'data_cutis.id_cuti', '=', 'vertifikasis.id_cuti')
+                        ->where('vertifikasis.id_vertif', $id_vertif)
+                        ->get();
+        // $vertifikasis = Vertifikasi::findOrFail($id_vertif);
+
+        return view('admin.layouts.laporanprint', [
+            "title" => "Print Laporan", 'vertifikasis' => $vertifikasis,
         ]);
     }
 
@@ -46,9 +73,40 @@ class AdminController extends Controller
      * Menampilkan Profil Karyawan.
      */
     public function profil(){
+        $nik = auth()->user()->nik;
+        $admins  = DB::table('admins')
+                    ->where('admins.nik', $nik)
+                    ->get();
         return view('admin.layouts.profil', [
-            "title" => "Profil Karyawan"
+            "title" => "Profile", 'admins' => $admins,
         ]);
+    }
+    public function profiledit($nik){
+        $admins  = DB::table('admins')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('admin.layouts.profiledit', [
+            "title" => "Edit Profile", 'admins' => $admins,
+        ]);
+    }
+    public function editprofil(Request $request, $nik){
+        // update data pegawai
+	    DB::table('admins')->where('nik',$request->nik)->update([
+            'nik'           =>$request->nik,
+            'name'          =>$request->name,
+            'tempat_lahir'  =>$request->tempat_lahir,
+            'tgl_lahir'     =>$request->tgl_lahir,
+            'agama'         =>$request->agama,
+            'jenis_kelamin' =>$request->jenis_kelamin,
+            'no_hp'         =>$request->no_hp,
+            'email'         =>$request->email,
+            'alamat'        =>$request->alamat,
+            'jabatan'       =>$request->jabatan,
+            'bagian'        =>$request->bagian,
+            'tgl_masuk'     =>$request->tgl_masuk,
+        ]);
+
+        return redirect('/admin/profil')->with('success', 'Berhasil Merubah Data Profile');
     }
 
     /**

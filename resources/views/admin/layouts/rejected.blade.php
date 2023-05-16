@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Laporan Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Riwayat Rejected Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -26,10 +26,12 @@
                                     <th>Nama</th>
                                     <th>Jabatan</th>
                                     <th>Bagian</th>
-                                    <th>No HP</th>
-                                    <th>Hak Cuti</th>
-                                    <th>Cuti Diambil</th>
-                                    <th>Sisa Cuti</th>
+                                    {{-- <th>Nama Cuti</th> --}}
+                                    <th>Jumlah Cuti</th>
+                                    <th>Awal Cuti</th>
+                                    <th>Akhir Cuti</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -37,28 +39,29 @@
                                 @php
                                     $no=1;
                                 @endphp
-                                {{-- @foreach($pegawais as $p) --}}
-                                @foreach ( $vertifikasis as $p )
+                                @foreach ( $cutis as $p )
                                     <tr>
                                         <td scope="row">{{ $no++ }}</td>
                                         <td >{{ $p->nik }}</td>
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->jabatan }}</td>
                                         <td >{{ $p->bagian }}</td>
-                                        <td >{{ $p->no_hp }}</td>
-                                        <td >{{ $p->hak_cuti }}</td>
-                                        <td >{{ $p->cuti_diambil }}</td>
-                                        <td >{{ $p->sisa_cuti }}</td>
+                                        {{-- <td >{{ $p->nama_cuti }}</td> --}}
+                                        <td >{{ $p->jumlah_cuti }}</td>
+                                        <td >@php echo date('d-m-Y', strtotime( $p->tgl_awal )) @endphp </td>
+                                        <td >@php echo date('d-m-Y', strtotime( $p->tgl_akhir )) @endphp </td>
+                                        <td >{{ $p->keterangan }}</td>
+                                        <td >
+                                            @if($p->approval_kabag == 'Approved' && $p->approval_manager == 'Approved' && $p->vertifikasi_admin == 'Rejected')
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-success"><i class="fas fa-check"></i></span> |
+                                                <span class="text-danger"><i class="fas fa-times"></i></span>
+                                            @endif
+                                        </td>
                                         <td>
-                                            <a href="/admin/laporandetail/{{ $p->id_vertif }}" data-toggle="tooltip" data-placement="bottom" title="Detail">
-                                                <button type="submit" class="btn btn-warning" name="detail" value="DETAIL">
+                                            <a href="/admin/riwayatdetail/{{ $p->id }}" data-toggle="tooltip" data-placement="bottom" title="Detail Riwayat Cuti">
+                                                <button type="submit" class="btn btn-warning" name="detail" value="Detail">
                                                     <i class="fas fa-eye"></i>
-                                                </button>
-                                            </a>
-                                            <a href="/admin/laporanprint/{{ $p->id_vertif }}" target="_blank"
-                                                data-toggle="tooltip" data-placement="bottom" title="Print">
-                                                <button type="button" class="btn btn-primary">
-                                                    <i class="fas fa-print"></i>
                                                 </button>
                                             </a>
                                         </td>
@@ -72,3 +75,4 @@
     </section>
     <!-- /.main content -->
 @endsection
+

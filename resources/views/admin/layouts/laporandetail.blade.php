@@ -1,4 +1,4 @@
-@extends('kabag.main')
+@extends('admin.main')
 
 @section('container')
     <!-- Content Header (Page header) -->
@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Detail Riwayat Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Detail Lporan Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-body">
                     {{-- <div class="card-header"> --}}
-                        @foreach ( $cutis as $p )
+                        @foreach ( $vertifikasis as $p )
                         <form method="POST" action="">
                             {{ csrf_field() }}
                             <div class="row">
@@ -36,6 +36,43 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td><label class="col-form-label">TEMPAT LAHIR</label></td>
+                                            <td><input type="text" name="tempat_lahir" class="form-control" value="{{ $p->tempat_lahir }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">TANGGAL LAHIR</label></td>
+                                            <td><input type="date" name="tgl_lahir" class="form-control" value="{{ $p->tgl_lahir }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">AGAMA</label></td>
+                                            <td>
+                                                <input type="text" name="agama" class="form-control" value="{{ $p->agama }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">JENIS KELAMIN</label></td>
+                                            <td>
+                                                <input type="text" name="jenis_kelamin" class="form-control" value="{{ $p->jenis_kelamin }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">NO HP</label></td>
+                                            <td width="350px"><input type="text" name="no_hp" class="form-control" value="{{ $p->no_hp }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">EMAIL</label></td>
+                                            <td width="350px"><input type="email" name="email" class="form-control" value="{{ $p->email }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">ALAMAT</label></td>
+                                            <td><textarea name="alamat" class="form-control" rows="5" value="{{ $p->alamat }}" readonly>{{ $p->alamat }}</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td><label class="col-form-label">JABATAN</label></td>
                                             <td>
                                                 <input type="text" name="jabatan" class="form-control" value="{{ $p->jabatan }}" readonly>
@@ -48,14 +85,27 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label class="col-form-label">TANGGAL PENGAJUAN</label></td>
-                                            <td><input type="date" name="tgl_pengajuan" class="form-control" value="{{ $p->tgl_pengajuan }}" readonly>
+                                            <td><label class="col-form-label">TANGGAL MASUK</label></td>
+                                            <td><input type="date" name="tgl_masuk" class="form-control" value="{{ $p->tgl_masuk }}" readonly>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-sm-6">
+                                    <table width="auto" border="0" cellpadding="5">
+                                        <tr>
+                                            <td><label class="col-form-label">NAMA CUTI</label></td>
+                                            <td width="350px"><input type="text" name="nama_cuti" class="form-control" value="{{ $p->nama_cuti }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><label class="col-form-label">NAMA CUTI</label></td>
-                                            <td>
-                                                <input type="text" name="nama_cuti" class="form-control" value="{{ $p->nama_cuti }}" readonly>
+                                            <td><label class="col-form-label">PERIODE CUTI</label></td>
+                                            <td><input type="text" name="periode" class="form-control" value="{{ $p->periode }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">TANGGAL PENGAJUAN</label></td>
+                                            <td><input type="date" name="tgl_pengajuan" class="form-control" value="{{ $p->tgl_pengajuan }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
@@ -64,10 +114,6 @@
                                                 <input type="text" name="jumlah_cuti" class="form-control" value="{{ $p->jumlah_cuti }}" readonly>
                                             </td>
                                         </tr>
-                                    </table>
-                                </div>
-                                <div class="col-sm-6">
-                                    <table width="auto" border="0" cellpadding="5">
                                         <tr>
                                             <td><label class="col-form-label">TANGGAL AWAL CUTI</label></td>
                                             <td width="350px"><input type="date" name="tgl_awal" class="form-control" value="{{ $p->tgl_awal }}" readonly>
@@ -81,6 +127,23 @@
                                         <tr>
                                             <td><label class="col-form-label">KETERANGAN</label></td>
                                             <td><textarea name="keterangan" class="form-control" rows="3" value="{{ $p->keterangan }}" readonly>{{ $p->keterangan }}</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">HAK CUTI</label></td>
+                                            <td>
+                                                <input type="text" name="hak_cuti" class="form-control" value="{{ $p->hak_cuti }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">CUTI DIAMBIL</label></td>
+                                            <td>
+                                                <input type="text" name="cuti_diambil" class="form-control" value="{{ $p->cuti_diambil }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><label class="col-form-label">SISA CUTI</label></td>
+                                            <td><input type="text" name="sisa_cuti" class="form-control" value="{{ $p->sisa_cuti }}" readonly>
                                             </td>
                                         </tr>
                                         <tr>
@@ -104,8 +167,8 @@
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
                                             <td>
-                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="history.back()">
-                                                  <i class="fas fa-ban"></i> BACK
+                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="window.location.href='/admin/laporan'">
+                                                    <i class="fas fa-ban"></i> BACK
                                                 </button>
                                             </td>
                                         </tr>

@@ -1,0 +1,16 @@
+.bg{
+    background-image: url('../dist/images/kimi2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.container-form{
+    border: 1px solid #ffffff;
+    margin-top: 25vh;
+    padding: 30px 30px;
+    border-radius: 20px;
+    -webkit-box-shadow: 0px 2px 11px 10px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 2px 11px 10px rgba(255,255,255,1);
+    box-shadow: 0px 2px 11px 10px rgba(255,255,255,1);
+}

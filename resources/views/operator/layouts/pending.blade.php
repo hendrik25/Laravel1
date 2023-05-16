@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Riwayat Cuti Karyawan</h1>
+                    <h1 class="m-0 text-dark">Riwayat Rejected Cuti Karyawan</h1>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -25,7 +25,6 @@
                                     <th>Nik</th>
                                     <th>Nama</th>
                                     <th>Jabatan</th>
-                                    <th>Bagian</th>
                                     {{-- <th>Nama Cuti</th> --}}
                                     <th>Jumlah Cuti</th>
                                     <th>Awal Cuti</th>
@@ -45,7 +44,6 @@
                                         <td >{{ $p->nik }}</td>
                                         <td >{{ $p->name }}</td>
                                         <td >{{ $p->jabatan }}</td>
-                                        <td >{{ $p->bagian }}</td>
                                         {{-- <td >{{ $p->nama_cuti }}</td> --}}
                                         <td >{{ $p->jumlah_cuti }}</td>
                                         <td >@php echo date('d-m-Y', strtotime( $p->tgl_awal )) @endphp </td>

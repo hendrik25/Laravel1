@@ -34,11 +34,40 @@
                         <a href="/admin/karyawandata" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!--Laporan Cuti-->
+                @php
+                    $cutis = DB::table('cutis')
+                        ->rightjoin('admins', 'admins.nik', '=', 'cutis.nik')
+                        ->where('cutis.vertifikasi_admin', 'Pending')
+                        ->where('cutis.approval_manager', 'Approved')
+                        ->where('cutis.approval_kabag', 'Approved')
+                        ->get();
+                    $approve = $cutis->count();
+                @endphp
+                <!--Approve cuti-->
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{$approve }}</h3>
+                            <p>Approval Cuti</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-edit"></i>
+                        </div>
+                        <a href="/admin/vertifikasi" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!--Laporan Cuti-->
+                @php
+                    $cuti = DB::select('SELECT * FROM vertifikasis RIGHT JOIN admins ON admins.nik=vertifikasis.nik
+							RIGHT JOIN cutis ON cutis.id=vertifikasis.id
+                            RIGHT JOIN data_cutis ON data_cutis.id_cuti=vertifikasis.id_cuti
+                            WHERE vertifikasis.nik=admins.nik;');
+                    $count = count($cuti);
+                @endphp
+                <div class="col-lg-3 col-6">
+                    <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>53</h3>
+                                <h3>{{ $count }}</h3>
                                 <p>LAPORAN CUTI</p>
                             </div>
                             <div class="icon">
@@ -48,28 +77,6 @@
                     </div>
                 </div>
 
-                @php
-                    $users = DB::table('users')
-                            ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
-                            ->whereIn('admins.jabatan', ['Manager','Kepala Bagian', 'Operator'])
-                            ->whereNull('users.username')
-                            ->whereNull('users.password')
-                            ->get();
-                    $count3=$users->count();
-                @endphp
-                <!--User Registrasi-->
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>{{$count3 }}</h3>
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="/admin/user" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
                 @php
                     $users = DB::table('users')
                             ->rightjoin('admins', 'admins.nik', '=', 'users.nik')
@@ -87,7 +94,7 @@
                             <p>Kelola Users</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-ios-contact"></i>
+                            <i class="ion ion-person-add"></i>
                         </div>
                         <a href="/admin/user" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>

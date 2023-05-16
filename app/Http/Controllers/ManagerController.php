@@ -21,8 +21,21 @@ class ManagerController extends Controller
      * Menampilkan Laporan Cuti Karyawan.
      */
     public function laporancuti(){
+        $vertifikasis= DB::select('SELECT * FROM vertifikasis RIGHT JOIN admins ON admins.nik=vertifikasis.nik
+							RIGHT JOIN cutis ON cutis.id=vertifikasis.id
+                            RIGHT JOIN data_cutis ON data_cutis.id_cuti=vertifikasis.id_cuti
+                            WHERE vertifikasis.nik=admins.nik;');
         return view('manager.layouts.laporancuti', [
-            "title" => "Data Laporan Cuti Karyawan"
+            "title" => "Data Laporan Cuti Karyawan", 'vertifikasis' => $vertifikasis,
+        ]);
+    }
+    public function laporandetail(){
+        $vertifikasis= DB::select('SELECT * FROM vertifikasis RIGHT JOIN admins ON admins.nik=vertifikasis.nik
+							RIGHT JOIN cutis ON cutis.id=vertifikasis.id
+                            RIGHT JOIN data_cutis ON data_cutis.id_cuti=vertifikasis.id_cuti
+                            WHERE vertifikasis.nik=admins.nik');
+        return view('manager.layouts.laporandetail', [
+            "title" => "Data Laporan Cuti Karyawan", 'vertifikasis' => $vertifikasis,
         ]);
     }
 
@@ -30,9 +43,40 @@ class ManagerController extends Controller
      * Profil Karyawan.
      */
     public function profil(){
+        $nik = auth()->user()->nik;
+        $admins  = DB::table('admins')
+                    ->where('admins.nik', $nik)
+                    ->get();
         return view('manager.layouts.profil', [
-            "title" => "Profil Karyawan"
+            "title" => "Profile", 'admins' => $admins,
         ]);
+    }
+    public function profiledit($nik){
+        $admins  = DB::table('admins')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('manager.layouts.profiledit', [
+            "title" => "Edit Profile", 'admins' => $admins,
+        ]);
+    }
+    public function editprofil(Request $request, $nik){
+        // update data pegawai
+	    DB::table('admins')->where('nik',$request->nik)->update([
+            'nik'           =>$request->nik,
+            'name'          =>$request->name,
+            'tempat_lahir'  =>$request->tempat_lahir,
+            'tgl_lahir'     =>$request->tgl_lahir,
+            'agama'         =>$request->agama,
+            'jenis_kelamin' =>$request->jenis_kelamin,
+            'no_hp'         =>$request->no_hp,
+            'email'         =>$request->email,
+            'alamat'        =>$request->alamat,
+            'jabatan'       =>$request->jabatan,
+            'bagian'        =>$request->bagian,
+            'tgl_masuk'     =>$request->tgl_masuk,
+        ]);
+
+        return redirect('/manager/profil')->with('success', 'Berhasil Merubah Data Profile');
     }
 
     /**

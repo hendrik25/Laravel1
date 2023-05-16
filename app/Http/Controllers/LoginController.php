@@ -26,7 +26,10 @@ class LoginController extends Controller
 
             }
         }
-        return view('login.index');
+        return view('login.home', [
+            "title" => "Halaman Login"
+        ]);
+        // return view('login.index');
     }
     // public function proses(Request $request){
     //     $request->validate([

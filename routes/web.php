@@ -45,6 +45,9 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('/admin/approved/{id}', [VertifikasiController::class, 'approved'])->name('approved');
         Route::get('/admin/rejected/{id}', [VertifikasiController::class, 'rejected'])->name('rejected');
 
+        Route::get('/admin/riwayatapproved', [VertifikasiController::class, 'approvedadmin'])->name('approvedadmin');
+        Route::get('/admin/riwayatrejected', [VertifikasiController::class, 'rejectedadmin'])->name('rejectedadmin');
+
         //datakaryawan
         Route::get('/admin/karyawandata', [DataKarController::class, 'karyawandata'])->name('karyawandata');
         Route::get('/admin/karyawantambah', [DataKarController::class, 'karyawantambah'])->name('karyawantambah');
@@ -71,9 +74,14 @@ Route::group(['middleware' => ['auth']], function(){
 
         //profil
         Route::get('/admin/profil', [AdminController::class, 'profil'])->name('profil');
+        Route::get('/admin/profiledit/{nik}', [AdminController::class, 'profiledit'])->name('profiledit');
+        Route::post('/admin/editprofil/{nik}', [AdminController::class, 'editprofil'])->name('editprofil');
 
         //laporan
         Route::get('/admin/laporan', [AdminController::class, 'laporancuti'])->name('laporancuti');
+        Route::get('/admin/laporandetail/{id}', [AdminController::class, 'laporandetail'])->name('laporandetail');
+        Route::get('/admin/laporanprint/{id_vertif}', [AdminController::class, 'laporanprint'])->name('laporanprint');
+
     });
     //manager
     Route::group(['middleware' =>['cekUserLogin:Manager']], function(){
@@ -90,6 +98,9 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('/manager/riwayat2', [VertifikasiController::class, 'riwayat2'])->name('riwayat2');
         Route::get('/manager/riwayatdetail2/{id}', [VertifikasiController::class, 'riwayatdetail2'])->name('riwayatdetail2');
 
+        Route::get('/manager/riwayatapproved', [VertifikasiController::class, 'approvedmanager'])->name('approvedmanager');
+        Route::get('/manager/riwayatrejected', [VertifikasiController::class, 'rejectedmanager'])->name('rejectedmanager');
+
         //Data Karyawan
         Route::get('/manager/karyawandata', [DataKarController::class, 'karyawandata2'])->name('karyawandata2');
         Route::get('/manager/karyawandetail/{nik}', [DataKarController::class, 'detail2'])->name('detail2');
@@ -100,10 +111,14 @@ Route::group(['middleware' => ['auth']], function(){
 
         //profil
         Route::get('/manager/profil', [ManagerController::class, 'profil'])->name('profil');
+        Route::get('/manager/profiledit/{nik}', [ManagerController::class, 'profiledit'])->name('profiledit');
+        Route::post('/manager/editprofil/{nik}', [ManagerController::class, 'editprofil'])->name('editprofil');
+
         //changepassword
         Route::post('/manager/user/update', [ManagerController::class, 'updateuser2'])->name('updateuser2');
         //laporan
         Route::get('/manager/laporan', [ManagerController::class, 'laporancuti'])->name('laporancuti');
+        Route::get('/manager/laporandetail/{id}', [ManagerController::class, 'laporandetail'])->name('laporandetail');
     });
     //kabag
     Route::group(['middleware' =>['cekUserLogin:Kepala Bagian']], function(){
@@ -120,6 +135,10 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('/kabag/riwayat3', [VertifikasiController::class, 'riwayat3'])->name('riwayat3');
         Route::get('/kabag/riwayatdetail3/{nik}', [VertifikasiController::class, 'riwayatdetail3'])->name('riwayatdetail3');
 
+        Route::get('/kabag/riwayatapproved', [VertifikasiController::class, 'approvedkabag'])->name('approvedkabag');
+        Route::get('/kabag/riwayatrejected', [VertifikasiController::class, 'rejectedkabag'])->name('rejectedkabag');
+
+
         //Data Karyawan
         Route::get('/kabag/karyawandata', [DataKarController::class, 'karyawandata3'])->name('karyawandata3');
         Route::get('/kabag/karyawandetail/{nik}', [DataKarController::class, 'detail3'])->name('detail3');
@@ -130,6 +149,9 @@ Route::group(['middleware' => ['auth']], function(){
 
         //profil
         Route::get('/kabag/profil', [KabagController::class, 'profil'])->name('profil');
+        Route::get('/kabag/profiledit/{nik}', [KabagController::class, 'profiledit'])->name('profiledit');
+        Route::post('/kabag/editprofil/{nik}', [KabagController::class, 'editprofil'])->name('editprofil');
+
         //changepassword
         Route::post('/kabag/user/update', [KabagController::class, 'updateuser3'])->name('updateuser3');
     });
@@ -150,12 +172,19 @@ Route::group(['middleware' => ['auth']], function(){
         Route::post('/operator/riwayatupdate/{id}', [VertifikasiController::class, 'riwayatupdate'])->name('riwayatupdate');
         Route::get('/operator/riwayathapus4/{id}', [VertifikasiController::class, 'riwayathapus4'])->name('riwayathapus4');
 
+        Route::get('/operator/riwayatpending', [VertifikasiController::class, 'pending4'])->name('pending4');
+        Route::get('/operator/riwayatapproved', [VertifikasiController::class, 'approved4'])->name('approved4');
+        Route::get('/operator/riwayatrejected', [VertifikasiController::class, 'rejected4'])->name('rejected4');
+
         //data cuti
         Route::get('/operator/cutidata4', [DataCutiController::class, 'cutidata4'])->name('cutidata4');
         Route::get('/operator/cutidetail4/{nik}', [DataCutiController::class, 'cutidetail4'])->name('cutidetail4');
 
         //profil
         Route::get('/operator/profil', [OperatorController::class, 'profil'])->name('profil');
+        Route::get('/operator/profiledit/{nik}', [OperatorController::class, 'profiledit'])->name('profiledit');
+        Route::post('/operator/editprofil/{nik}', [OperatorController::class, 'editprofil'])->name('editprofil');
+
         //changepassword
         Route::post('/operator/user/update', [OperatorController::class, 'updateuser4'])->name('updateuser4');
     });

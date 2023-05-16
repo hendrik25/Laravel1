@@ -19,7 +19,7 @@
             <!-- Small boxes (Stat box) -->
             <div class="row">
                 <!--Data Karyawan-->
-                <div class="col-lg-5 col-6">
+                <div class="col-lg-4 col-6">
                     @php
                         $count  = DB::table('admins')->whereIn('jabatan', ['Operator'])->count();
                     @endphp
@@ -32,6 +32,29 @@
                             <i class="ion ion-archive"></i>
                         </div>
                         <a href="/kabag/karyawandata" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+
+                @php
+                $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'admins.nik', '=', 'cutis.nik')
+                    ->where('cutis.vertifikasi_admin', 'Pending')
+                    ->where('cutis.approval_manager', 'Pending')
+                    ->where('cutis.approval_kabag', 'Pending')
+                    ->get();
+                $approve = $cutis->count();
+                @endphp
+                <!--Approve cuti-->
+                <div class="col-lg-4 col-6">
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{$approve }}</h3>
+                            <p>Approval Cuti</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-edit"></i>
+                        </div>
+                        <a href="/manager/vertifikasi" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>

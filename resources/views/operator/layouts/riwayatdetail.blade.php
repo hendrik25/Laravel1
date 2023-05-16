@@ -69,6 +69,11 @@
                                 <div class="col-sm-6">
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
+                                            <td><label class="col-form-label">TANGGAL PENGAJUAN</label></td>
+                                            <td width="350px"><input type="date" name="tgl_pengajuan" class="form-control" value="{{ $p->tgl_pengajuan }}" readonly>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td><label class="col-form-label">TANGGAL AWAL CUTI</label></td>
                                             <td width="350px"><input type="date" name="tgl_awal" class="form-control" value="{{ $p->tgl_awal }}" readonly>
                                             </td>
@@ -104,9 +109,9 @@
                                     <table width="auto" border="0" cellpadding="5">
                                         <tr>
                                             <td>
-                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="window.location.href='/operator/riwayat'">
-                                                <i class="fas fa-ban"></i> BACK
-                                            </button>
+                                                <button type="button" class="btn btn-warning" name="batal" value="BATAL" onclick="history.back()">
+                                                  <i class="fas fa-ban"></i> BACK
+                                                </button>
                                             </td>
                                         </tr>
                                     </table>

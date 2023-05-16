@@ -21,9 +21,40 @@ class KabagController extends Controller
      * Profil Karyawan.
      */
     public function profil(){
+        $nik = auth()->user()->nik;
+        $admins  = DB::table('admins')
+                    ->where('admins.nik', $nik)
+                    ->get();
         return view('kabag.layouts.profil', [
-            "title" => "Profil Karyawan"
+            "title" => "Profile", 'admins' => $admins,
         ]);
+    }
+    public function profiledit($nik){
+        $admins  = DB::table('admins')
+                    ->where('admins.nik', $nik)
+                    ->get();
+        return view('kabag.layouts.profiledit', [
+            "title" => "Edit Profile", 'admins' => $admins,
+        ]);
+    }
+    public function editprofil(Request $request, $nik){
+        // update data pegawai
+	    DB::table('admins')->where('nik',$request->nik)->update([
+            'nik'           =>$request->nik,
+            'name'          =>$request->name,
+            'tempat_lahir'  =>$request->tempat_lahir,
+            'tgl_lahir'     =>$request->tgl_lahir,
+            'agama'         =>$request->agama,
+            'jenis_kelamin' =>$request->jenis_kelamin,
+            'no_hp'         =>$request->no_hp,
+            'email'         =>$request->email,
+            'alamat'        =>$request->alamat,
+            'jabatan'       =>$request->jabatan,
+            'bagian'        =>$request->bagian,
+            'tgl_masuk'     =>$request->tgl_masuk,
+        ]);
+
+        return redirect('/kabag/profil')->with('success', 'Berhasil Merubah Data Profile');
     }
 
     /**

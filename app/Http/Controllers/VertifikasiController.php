@@ -54,18 +54,37 @@ class VertifikasiController extends Controller
             ->where('cutis.id', $request->id)
             ->first();
 
-        $hak = $cuti->hak_cuti;
-        $jumlah_cuti = $cuti->jumlah_cuti;
-        $sisa = $cuti->sisa_cuti;
-        $total = $hak - $jumlah_cuti;
+        $hak            = $cuti->sisa_cuti;
+        $jumlah_cuti    = $cuti->jumlah_cuti;
+        // $cuti_diambil   = $cuti->cuti_diambil;
+        // $sisa           = $cuti->sisa_cuti;
+        // $ambil          = $cuti_diambil+$jumlah_cuti;
+        $sisa           = $hak - $jumlah_cuti;
 
         // Update data cuti
         DB::table('data_cutis')->where('nik', $cuti->nik)->update([
             'hak_cuti'      => $hak,
             'cuti_diambil'  => $jumlah_cuti,
-            'sisa_cuti'     => $total,
+            'sisa_cuti'     => $sisa,
         ]);
 
+        $cuti = DB::table('cutis')
+            ->leftjoin('data_cutis', 'cutis.nik', '=', 'data_cutis.nik')
+            ->leftjoin('admins', 'cutis.nik', '=', 'admins.nik')
+            // ->leftjoin('vertifikasis', 'cutis.id', '=', 'vertifikasis.id')
+            // ->select('cutis.*', 'data_cutis.*', 'admins.*', 'vertifikasis.*')
+            ->where('cutis.id', $request->id)
+            ->first();
+
+        $id        = $cuti->id;
+        $id_cuti   = $cuti->id_cuti;
+        $nik       = $cuti->nik;
+
+        $vertifikasis = DB::table('vertifikasis')->insert([
+            'id'        => $id,
+            'id_cuti'   => $id_cuti,
+            'nik'       => $nik,
+        ]);
         return redirect()->back()->with('success', 'Berhasil Approved Cuti. Silahkan Lihat Riwayat Vertifikasi');
     }
 
@@ -98,6 +117,34 @@ class VertifikasiController extends Controller
                     ->get();
         return view('admin.layouts.riwayatdetail', [
             "title" => "Detail Riwayat", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat approved
+    public function approvedadmin(){
+        // $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', ['Approved'])
+                    ->whereIn('cutis.approval_manager', ['Approved'])
+                    ->whereIn('cutis.approval_kabag', ['Approved'])
+                    // ->where('cutis.nik', $nik)
+                    ->get();
+        return view('admin.layouts.approved', [
+            "title" => "Riwayat Approved Cuti", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat rejected
+    public function rejectedadmin(){
+        $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', ['Rejected'])
+                    ->whereIn('cutis.approval_manager', ['Approved'])
+                    ->whereIn('cutis.approval_kabag', ['Approved'])
+                    // ->where('cutis.nik', $nik)
+                    ->get();
+        return view('admin.layouts.rejected', [
+            "title" => "Riwayat Rejected Cuti", 'cutis' => $cutis
         ]);
     }
 
@@ -161,6 +208,34 @@ class VertifikasiController extends Controller
                     ->get();
         return view('manager.layouts.riwayatdetail', [
             "title" => "Detail Riwayat", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat approved
+    public function approvedmanager(){
+        // $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', [ 'Pending', 'Approved'])
+                    ->whereIn('cutis.approval_manager', ['Approved'])
+                    ->whereIn('cutis.approval_kabag', ['Approved'])
+                    // ->where('cutis.nik', $nik)
+                    ->get();
+        return view('manager.layouts.approved', [
+            "title" => "Riwayat Approved Cuti", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat rejected
+    public function rejectedmanager(){
+        $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', ['Rejected'])
+                    ->whereIn('cutis.approval_manager', ['Rejected'])
+                    ->whereIn('cutis.approval_kabag', ['Approved'])
+                    // ->where('cutis.nik', $nik)
+                    ->get();
+        return view('manager.layouts.rejected', [
+            "title" => "Riwayat Rejected Cuti", 'cutis' => $cutis
         ]);
     }
 
@@ -229,6 +304,34 @@ class VertifikasiController extends Controller
             "title" => "Detail Riwayat", 'cutis' => $cutis
         ]);
     }
+    //riwayat approved
+    public function approvedkabag(){
+        // $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', [ 'Pending', 'Approved'])
+                    ->whereIn('cutis.approval_manager', ['Pending', 'Approved'])
+                    ->whereIn('cutis.approval_kabag', ['Approved'])
+                    // ->where('cutis.nik', $nik)
+                    ->get();
+        return view('kabag.layouts.approved', [
+            "title" => "Riwayat Approved Cuti", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat rejected
+    public function rejectedkabag(){
+        $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', ['Rejected'])
+                    ->whereIn('cutis.approval_manager', ['Approved', 'Rejected'])
+                    ->whereIn('cutis.approval_kabag', ['Approved', 'Rejected'])
+                    // ->where('cutis.nik', $nik)
+                    ->get();
+        return view('kabag.layouts.rejected', [
+            "title" => "Riwayat Rejected Cuti", 'cutis' => $cutis
+        ]);
+    }
 
     // OPERATOR
     // riwayat
@@ -236,6 +339,9 @@ class VertifikasiController extends Controller
         $nik = auth()->user()->nik;
         $cutis = DB::table('cutis')
                     ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.approval_kabag', ['Pending',  ])
+                    ->whereIn('cutis.approval_manager', ['Pending',  ])
+                    ->whereIn('cutis.vertifikasi_admin', ['Pending',  ])
                     ->where('cutis.nik', $nik)
                     ->get();
         return view('operator.layouts.riwayat', [
@@ -297,5 +403,47 @@ class VertifikasiController extends Controller
                     ->where('id', $id)
                     ->delete();
         return redirect()->back()->with('success', 'Berhasil Menghapus Data Karyawan');
+    }
+    //riwayat Pending
+    public function pending4(){
+        $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.approval_kabag', ['Pending', 'Approved', 'Rejected' ])
+                    ->whereIn('cutis.approval_manager', ['Pending', 'Approved', ])
+                    ->whereIn('cutis.vertifikasi_admin', ['Pending', ])
+                    ->where('cutis.nik', $nik)
+                    ->get();
+        return view('operator.layouts.pending', [
+            "title" => "Riwayat Approved Cuti", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat approved
+    public function approved4(){
+        $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->where('cutis.approval_kabag', 'Approved')
+                    ->where('cutis.approval_manager', 'Approved')
+                    ->where('cutis.vertifikasi_admin', 'Approved')
+                    ->where('cutis.nik', $nik)
+                    ->get();
+        return view('operator.layouts.approved', [
+            "title" => "Riwayat Approved Cuti", 'cutis' => $cutis
+        ]);
+    }
+    //riwayat rejected
+    public function rejected4(){
+        $nik = auth()->user()->nik;
+        $cutis = DB::table('cutis')
+                    ->rightjoin('admins', 'cutis.nik', '=', 'admins.nik')
+                    ->whereIn('cutis.vertifikasi_admin', [ 'Rejected'])
+                    ->whereIn('cutis.approval_manager', ['Approved', 'Rejected'])
+                    ->whereIn('cutis.approval_kabag', ['Approved', 'Rejected'])
+                    ->where('cutis.nik', $nik)
+                    ->get();
+        return view('operator.layouts.rejected', [
+            "title" => "Riwayat Rejected Cuti", 'cutis' => $cutis
+        ]);
     }
 }

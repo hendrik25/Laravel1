@@ -9,7 +9,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <!-- Notifications Dropdown Menu -->
-                @php
+                {{-- @php
                         $cutis = DB::table('cutis')
                         ->rightjoin('admins', 'admins.nik', '=', 'cutis.nik')
                         ->where('cutis.vertifikasi_admin', 'Pending')
@@ -30,7 +30,7 @@
                             <span class="float-right text-muted text-sm">{{ $approve }}</span>
                         </a>
                     </div>
-                </li>
+                </li> --}}
 
                 @php
                     use App\Models\User;
@@ -50,7 +50,7 @@
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-item dropdown-header">{{ $admins2->name }}</span>
                             <div class="dropdown-divider"></div>
-                                <a href="/" class="dropdown-item">
+                                <a href="/admin/profil" class="dropdown-item">
                                     <i class="fas fa-user mr-3"></i> My Profile
                                 </a>
                             <div class="dropdown-divider"></div>

@@ -22,11 +22,32 @@
                                 </a>
                             </li>
                             <li class="nav-item has-treeview">
-                                <a href="/operator/riwayat" class="nav-link">
-                                    <i class="nav-icon fas fa-list"></i>
-                                    <p>Riwayat Cuti</p>
+                                <a class="nav-link">
+                                    <i class="nav-icon fas fa-bell"></i>
+                                    <p>Riwayat Cuti<i class="fas fa-angle-left right"></i></p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item has-treeview">
+                                        <a href="/operator/riwayatpending" class="nav-link">
+                                            <i class="nav-icon fas fa-clock"></i>
+                                            <p>Pending</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item has-treeview">
+                                        <a href="/operator/riwayatapproved" class="nav-link">
+                                            <i class="nav-icon fas fa-check"></i>
+                                            <p>Approved</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item has-treeview">
+                                        <a href="/operator/riwayatrejected" class="nav-link">
+                                            <i class="nav-icon fas fa-times"></i>
+                                            <p>Rejected</p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
+
                             <li class="nav-item has-treeview">
                                 <a href="/operator/cutidata4" class="nav-link">
                                     <i class="nav-icon fas fa-database"></i>
