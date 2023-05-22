@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use Carbon\Carbon;
 use App\Models\Cuti;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class OperatorController extends Controller
 {

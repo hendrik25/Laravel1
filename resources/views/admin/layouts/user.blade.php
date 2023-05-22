@@ -74,11 +74,11 @@
                                                         </button>
                                                     </a>
                                                     <a href="#editModal{{ $p->nik }}" data-toggle="modal">
-                                                        <button type="submit" class="btn btn-warning" name="edit" value="Edit" {{ empty($p->username) || empty($p->password) ? 'disabled' : '' }} data-toggle="tooltip" data-placement="bottom" title="Edit User">
+                                                        <button type="submit" class="btn btn-warning" name="edit" value="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit User">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                     </a>
-                                                    <a href="/admin/user-delete{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Delete User" {{ empty($p->username) || empty($p->password) ? 'disabled' : '' }} onclick="event.preventDefault(); confirmDelete(this.href);">
+                                                    <a href="/admin/user-delete/{{ $p->nik }}" data-toggle="tooltip" data-placement="bottom" title="Delete User" onclick="event.preventDefault(); confirmDelete(this.href);">
                                                         <button type="submit" class="btn btn-danger" name="delete" value="Delete">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
@@ -176,7 +176,7 @@
             <br><h2 style="text-align: center"> FORM EDIT USER</h2>
             <div class="modal-header"></div>
             <div class="modal-body">
-                <form method="post" action="{{ route('edit', $p->nik) }}">
+                <form method="post" action="{{ route('edituser', $p->nik) }}">
                     @csrf
                     <div class="row">
                         <div class="row">
@@ -221,10 +221,10 @@
                                         <td><label class="col-form-label">HAK AKSES</label></td>
                                         <td>
                                             <select name="level" class="form-control">
-                                                <option {{old('level',$p->level)=="Admin"? 'selected':''}} value="Admin">Admin</option>
-                                                <option {{old('level',$p->level)=="Manager"? 'selected':''}} value="Manager">Manager</option>
+                                                <option {{old('level',$p->level)=="Operator"? 'selected':''}} value="Operator">Operator</option>
                                                 <option {{old('level',$p->level)=="Kepala Bagian"? 'selected':''}} value="Kepala Bagian">Kepala Bagian</option>
-                                                <option {{old('level',$p->level)=="Opertor"? 'selected':''}} value="Opertor">Opertor</option>
+                                                <option {{old('level',$p->level)=="Manager"? 'selected':''}} value="Manager">Manager</option>
+                                                <option {{old('level',$p->level)=="Admin"? 'selected':''}} value="Admin">Admin</option>
                                             </select>
                                         </td>
                                     </tr>

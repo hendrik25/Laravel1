@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class AdminController extends Controller
 {
@@ -158,41 +159,36 @@ class AdminController extends Controller
         }
     }
 
+    //edit user
+    public function edituser(Request $request, $nik){
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $password2 = $request->input('password2');
+        $level = $request->input('jabatan'); // Mengganti 'level' menjadi 'jabatan'
 
-    public function edit(Request $request, $nik){
-        if ($request->has('edit')) {
-            $nik = $request->input('nik');
-            $username = $request->input('username');
-            $password = $request->input('password');
-            $password2 = $request->input('password2');
-            $level = $request->input('level');
-
-            // cek apakah password lama dan username sudah sesuai
-            $user = User::where('nik', $nik)->where('username', $username)->first();
-            if (!$user) {
-                return redirect()->back()->with('error', 'Data user tidak ditemukan.');
-            }
-
-            // cek apakah password lama benar
-            if (!Hash::check($password, $user->password)) {
-                return redirect()->back()->with('error', 'Password lama salah.');
-            }
-
-            // cek apakah password baru sesuai dengan konfirmasi password
-            if ($password2 !== $request->input('password3')) {
-                return redirect()->back()->with('error', 'Konfirmasi password tidak sesuai.');
-            }
-
-            // update data user
-            $user->level = $level;
-            if ($password2) {
-                $user->password = Hash::make($password2);
-            }
-            $user->save();
-
-            return redirect()->back()->with('success', 'Data user berhasil diupdate.');
+        // cek apakah password lama dan username sudah sesuai
+        $user = User::where('nik', $nik)->where('username', $username)->first();
+        if (!$user) {
+            return redirect()->back()->with('error', 'Data user tidak ditemukan.');
         }
 
+        // cek apakah password lama benar
+        if (!Hash::check($password, $user->password)) {
+            return redirect()->back()->with('error', 'Password lama salah.');
+        }
+
+        // cek apakah password baru sesuai dengan konfirmasi password
+        if ($password2 !== $request->input('password3')) {
+            return redirect()->back()->with('error', 'Konfirmasi password tidak sesuai.');
+        }
+        // update data user
+        $user->level = $level; // Mengganti 'level' menjadi 'jabatan'
+        if ($password2) {
+            $user->password = Hash::make($password2);
+        }
+        $user->save();
+
+        return redirect()->back()->with('success', 'Data user berhasil diupdate.');
     }
 
     /**

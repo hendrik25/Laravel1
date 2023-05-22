@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function(){
         Route::get('/admin/karyawanedit/{nik}', [DataKarController::class, 'edit'])->name('edit');
         Route::post('/admin/karyawanupdate{nik}', [DataKarController::class, 'update'])->name('update');
         Route::get('/admin/karyawandetail/{nik}', [DataKarController::class, 'detail'])->name('detail');
-        Route::get('/admin/karyawandelete/{nik}', [DataKarController::class, 'destroy'])->name('destroy');
+        Route::get('/admin/karyawandelete/{nik}', [DataKarController::class, 'destroy'])->name('destroykar');
 
         //datacuti
         Route::get('/admin/cutidata', [DataCutiController::class, 'cutidata'])->name('cutidata');
@@ -65,9 +65,9 @@ Route::group(['middleware' => ['auth']], function(){
 
         //Kelola user
         Route::get('/admin/user', [AdminController::class, 'user'])->name('user');
-        Route::post('/admin/user-regist{nik}', [AdminController::class, 'regist'])->name('regist');
-        Route::post('/admin/user/edit{nik}', [AdminController::class, 'edit'])->name('edit');
-        Route::get('/admin/user-delete{nik}', [AdminController::class, 'destroy'])->name('destroy');
+        Route::post('/admin/user-regist/{nik}', [AdminController::class, 'regist'])->name('regist');
+        Route::post('/admin/user-edit/{nik}', [AdminController::class, 'edituser'])->name('edituser');
+        Route::get('/admin/user-delete/{nik}', [AdminController::class, 'destroy'])->name('destroyuser');
 
         //changepassword
         Route::post('/admin/user/update', [AdminController::class, 'updateuser'])->name('updateuser');

@@ -14,19 +14,16 @@
         <link rel="stylesheet" href="{{ asset('/') }}plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
         <link rel="stylesheet" href="{{ asset('/') }}plugins/daterangepicker/daterangepicker.css">
         <link rel="stylesheet" href="{{ asset('/') }}plugins/summernote/summernote-bs4.css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
         <link rel="stylesheet" type="text/css" href="{{ asset('/') }}st.css"/>
-
         <!-- DataTables -->
         <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="{{ asset('/') }}plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         <!-- Tooltip -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
         <!-- other head elements -->
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -103,6 +100,8 @@
     <script src="{{ asset('/') }}plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
     <script src="{{ asset('/') }}plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('/') }}plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
     {{-- <script src="{{ asset('/') }}dist/js/adminlte.min.js"></script> --}}
     <script>
         $(function () {
@@ -127,7 +126,6 @@
         $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
     <script>
         function confirmEdit(url) {
             Swal.fire({
