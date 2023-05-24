@@ -72,22 +72,20 @@ class DataCutiController extends Controller
 
                 if (!$cuti) {
                     // hitung sisa cuti
-                    $sisa_cuti = 12;
                     $periode = Carbon::now()->format('Y');
-                    $selisih_bulan = 12 - $masuk->month;
-
-                    if ($selisih_bulan > 0) {
-                        $sisa_cuti = $sisa_cuti / 12 * $selisih_bulan;
-                    }
+                    $startDate = Carbon::parse($admins); // Mengambil tgl_masuk dari database sebagai startDate
+                    $endDate = Carbon::now(); // Tanggal akhir adalah saat ini
+                    $selisihbulan = $startDate->diffInMonths($endDate); // Menghitung selisih bulan antara startDate dan endDate
+                    $cuti_diambil = 0;
 
                     // tambahkan data cuti baru
                     $data_cutis = DB::table('data_cutis')->insert([
                         'nik'           => $nik,
                         'nama_cuti'     => 'Cuti Tahunan',
                         'periode'       => $periode,
-                        'hak_cuti'      => $selisih_bulan,
-                        'cuti_diambil'  => '0',
-                        'sisa_cuti'     => $sisa_cuti,
+                        'hak_cuti'      => $selisihbulan,
+                        'cuti_diambil'  => $cuti_diambil,
+                        'sisa_cuti'     => $selisihbulan - $cuti_diambil,
                     ]);
 
                     return redirect()->back()->with('success', 'Data Cuti Berhasil Ditambah, Sesuai Dengan Periode Tahun ini...!!!');
@@ -110,13 +108,7 @@ class DataCutiController extends Controller
                         ->get();
 
         foreach ($data_cutis as $row) {
-            if (empty($row->id_cuti)) {
-                return redirect()->back()->with('error', 'Data Cuti Belum Terisi...!!! Silahkan Tambah Data Cuti...');
-            }
-            else if($row->periode == $now){
-                return redirect()->back()->with('error', 'Periode Cuti Masih Berlaku...!!! Silahkan Tunggu Periode Selanjutnya Untuk Update Data...');
-            }
-            else if($row->periode != $now){
+            if($row->periode != $now){
                 $ID         = $row->id_cuti;
                 $NIK        = $row->nik;
                 $NAMA       = $row->nama_cuti;
